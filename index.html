@@ -408,30 +408,12 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-
 /* lock icon on gated section labels */
 .gate-lock{font-size:10px;margin-left:5px;opacity:.5;}
 
-/* ── TruckCheck module styles ── */
-:root{
-  --bg:#0d1117;--surface:#161b22;--surface2:#1f2937;--border:#30363d;
-  --red:#dc2626;--red-glow:rgba(220,38,38,0.12);
-  --amber:#f59e0b;--green:#16a34a;
-  --text:#e6edf3;--text-muted:#8b949e;--text-dim:#484f58;
-  --pass-bg:rgba(22,163,74,0.12);--fail-bg:rgba(220,38,38,0.12);
-  --radius:6px;--shadow:0 4px 24px rgba(0,0,0,0.5);
-}
-*{box-sizing:border-box;margin:0;padding:0;}
-body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-height:100vh;font-size:15px;line-height:1.5;}
-.app-header{background:var(--surface);border-bottom:3px solid var(--red);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:64px;position:sticky;top:0;z-index:100;box-shadow:0 4px 20px rgba(0,0,0,0.6);}
-.logo{display:flex;align-items:center;gap:12px;}
-.portal-back{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);color:var(--text-muted);font-family:'Barlow',sans-serif;font-size:12px;font-weight:500;text-decoration:none;transition:all .2s;letter-spacing:.3px;}
-.portal-back:hover{color:var(--text);border-color:var(--text-muted);}
-.logo-badge{width:40px;height:40px;background:var(--red);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Oswald',sans-serif;font-size:15px;font-weight:700;letter-spacing:1px;flex-shrink:0;}
-.logo-dept{font-family:'Oswald',sans-serif;font-size:17px;font-weight:700;letter-spacing:.5px;line-height:1.1;}
-.logo-sub{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);}
-.nav-tabs{display:flex;gap:4px;}
-.nav-tab{padding:8px 16px;border:none;background:none;color:var(--text-muted);font-family:'Barlow',sans-serif;font-size:14px;font-weight:500;cursor:pointer;border-radius:var(--radius);transition:all .2s;}
-.nav-tab:hover{color:var(--text);background:var(--surface2);}
-.nav-tab.active{color:var(--red);background:var(--red-glow);}
-.app-main{max-width:900px;margin:0 auto;padding:32px 24px;}
-.view{display:none;}.view.active{display:block;}
+/* ── Truck Check module — additional styles only ── */
+.tc-view{display:none;}
+.tc-view.active{display:block;}
+.loading-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;align-items:center;justify-content:center;z-index:200;}
+.loading-overlay.visible{display:flex;}
+.loader{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:32px 48px;text-align:center;}
 .step-indicator{display:flex;align-items:center;margin-bottom:32px;}
 .step{display:flex;align-items:center;flex:1;}
 .step-num{width:32px;height:32px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;background:var(--surface);color:var(--text-muted);flex-shrink:0;transition:all .3s;}
@@ -444,7 +426,6 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-
 .step.done+.step-line{background:var(--green);}
 .section-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:16px;overflow:hidden;}
 .section-header{padding:13px 20px;background:var(--surface2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;}
-
 .section-title{font-family:'Oswald',sans-serif;font-size:14px;font-weight:600;letter-spacing:1px;text-transform:uppercase;display:flex;align-items:center;}
 .section-progress{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-muted);margin-right:10px;}
 .collapse-btn{background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:14px;padding:0;transition:transform .2s;line-height:1;}
@@ -457,8 +438,8 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-
 .status-buttons{display:flex;gap:4px;flex-shrink:0;}
 .status-btn{width:52px;height:30px;border:1px solid var(--border);border-radius:4px;background:transparent;color:var(--text-dim);font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;cursor:pointer;transition:all .15s;letter-spacing:.5px;}
 .status-btn:hover{border-color:var(--text-muted);color:var(--text-muted);}
-.status-btn.pass.active{background:var(--pass-bg);border-color:var(--green);color:#4ade80;}
-.status-btn.fail.active{background:var(--fail-bg);border-color:var(--red);color:#f87171;}
+.status-btn.pass.active{background:rgba(22,163,74,0.12);border-color:var(--green);color:#4ade80;}
+.status-btn.fail.active{background:rgba(220,38,38,0.12);border-color:var(--red);color:#f87171;}
 .status-btn.na.active{background:rgba(139,148,158,.1);border-color:var(--text-muted);color:var(--text-muted);}
 .status-btn.corr.active{background:rgba(245,158,11,.12);border-color:var(--amber);color:var(--amber);}
 .checklist-item.failed{background:rgba(220,38,38,.05);}
@@ -484,21 +465,6 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-
 .unit-icon{font-size:28px;margin-bottom:8px;display:block;}
 .unit-name{font-family:'Oswald',sans-serif;font-size:17px;font-weight:700;text-transform:uppercase;letter-spacing:1px;}
 .unit-type{font-size:11px;color:var(--text-muted);margin-top:2px;}
-.form-group{margin-bottom:18px;}
-.form-label{display:block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-muted);margin-bottom:5px;}
-.form-input{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);font-family:'Barlow',sans-serif;font-size:15px;padding:10px 14px;transition:border-color .15s;-webkit-appearance:none;}
-.form-input:focus{outline:none;border-color:var(--red);}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
-.required-mark{color:var(--red);}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border:none;border-radius:var(--radius);font-family:'Barlow',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:all .2s;}
-.btn-primary{background:var(--red);color:#fff;}
-.btn-primary:hover{background:#b91c1c;}
-.btn-primary:disabled{background:var(--surface2);color:var(--text-muted);cursor:not-allowed;}
-.btn-secondary{background:var(--surface2);color:var(--text);border:1px solid var(--border);}
-.btn-secondary:hover{border-color:var(--text-muted);}
-.btn-success{background:var(--green);color:#fff;}
-.btn-success:hover{background:#15803d;}
-.nav-buttons{display:flex;justify-content:space-between;align-items:center;margin-top:32px;padding-top:24px;border-top:1px solid var(--border);}
 .progress-bar-wrap{background:var(--surface2);border-radius:4px;height:5px;margin-bottom:22px;overflow:hidden;}
 .progress-bar-fill{height:100%;background:var(--red);border-radius:4px;transition:width .4s ease;}
 .summary-stats{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px;}
@@ -511,8 +477,8 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-
 .stat-card.na .stat-value{color:var(--text-muted);}
 .status-banner{padding:13px 18px;border-radius:var(--radius);margin-bottom:20px;font-weight:600;font-size:14px;display:flex;align-items:center;gap:10px;}
 .status-banner.all-clear{background:rgba(22,163,74,.15);border:1px solid #16a34a;color:#4ade80;}
-.status-banner.has-deficiencies{background:var(--fail-bg);border:1px solid var(--red);color:#f87171;}
-.deficiency-entry{background:var(--fail-bg);border:1px solid rgba(220,38,38,.25);border-radius:var(--radius);padding:11px 15px;margin-bottom:8px;}
+.status-banner.has-deficiencies{background:rgba(220,38,38,0.12);border:1px solid var(--red);color:#f87171;}
+.deficiency-entry{background:rgba(220,38,38,0.12);border:1px solid rgba(220,38,38,.25);border-radius:var(--radius);padding:11px 15px;margin-bottom:8px;}
 .deficiency-section{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#f87171;margin-bottom:2px;}
 .deficiency-item-name{font-size:14px;color:var(--text);}
 .deficiency-item-note{font-size:12px;color:var(--text-muted);margin-top:3px;font-style:italic;}
@@ -523,51 +489,20 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-
 .badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:12px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;}
 .badge-pass{background:rgba(22,163,74,.2);color:#4ade80;}
 .badge-fail{background:rgba(220,38,38,.2);color:#f87171;}
-.link-btn{background:none;border:none;color:var(--red);font-size:13px;cursor:pointer;padding:0;font-family:'Barlow',sans-serif;text-decoration:underline;}
-.link-btn:hover{color:#f87171;}
 .danger-btn{background:none;border:1px solid rgba(220,38,38,.35);color:#f87171;font-size:12px;padding:6px 12px;border-radius:4px;cursor:pointer;font-family:'Barlow',sans-serif;font-weight:500;transition:all .2s;}
-.danger-btn:hover{background:var(--fail-bg);}
-.page-title{font-family:'Oswald',sans-serif;font-size:22px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;}
-.page-subtitle{font-size:14px;color:var(--text-muted);margin-bottom:26px;}
-.toast{position:fixed;bottom:24px;right:24px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:13px 18px;font-size:14px;font-weight:500;z-index:1000;box-shadow:var(--shadow);display:none;max-width:340px;}
-.toast.success{border-color:var(--green);color:#4ade80;}
-.toast.error{border-color:var(--red);color:#f87171;}
-.toast.visible{display:block;animation:toastIn .3s ease;}
-@keyframes toastIn{from{transform:translateY(12px);opacity:0;}to{transform:translateY(0);opacity:1;}}
-.loading-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;align-items:center;justify-content:center;z-index:200;}
-.loading-overlay.visible{display:flex;}
-.loader{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:32px 48px;text-align:center;}
-.spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--red);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 14px;}
-@keyframes spin{to{transform:rotate(360deg);}}
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:300;align-items:center;justify-content:center;padding:24px;display:none;}
-.modal-overlay.visible{display:flex;}
-.modal{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);max-width:620px;width:100%;max-height:85vh;overflow-y:auto;box-shadow:var(--shadow);}
-.modal-header{padding:18px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--surface);}
-.modal-title{font-family:'Oswald',sans-serif;font-size:17px;font-weight:600;text-transform:uppercase;}
-.modal-close{background:none;border:none;color:var(--text-muted);font-size:18px;cursor:pointer;padding:4px;line-height:1;}
-.modal-body{padding:22px;}
-.empty-state{text-align:center;padding:64px 32px;color:var(--text-muted);}
+.danger-btn:hover{background:rgba(220,38,38,0.12);}
 .config-warn{background:rgba(245,158,11,.1);border:1px solid var(--amber);border-radius:var(--radius);padding:10px 14px;font-size:13px;color:var(--amber);margin-bottom:20px;}
+.nav-buttons{display:flex;justify-content:space-between;align-items:center;margin-top:32px;padding-top:24px;border-top:1px solid var(--border);}
 @media(max-width:640px){
-  .app-header{padding:0 14px;}.app-main{padding:18px 14px;}
-  .form-grid{grid-template-columns:1fr;}.summary-stats{grid-template-columns:repeat(3,1fr);}
-  .unit-grid{grid-template-columns:repeat(2,1fr);}.step-label{display:none;}
-  .logo-sub{display:none;}.item-row{padding:10px 14px;gap:10px;}
-  .item-deficiency{padding:0 14px 12px 14px;}.status-btn{width:44px;font-size:10px;}
+  .summary-stats{grid-template-columns:repeat(3,1fr);}
+  .unit-grid{grid-template-columns:repeat(2,1fr);}
+  .step-label{display:none;}
+  .item-row{padding:10px 14px;gap:10px;}
+  .item-deficiency{padding:0 14px 12px 14px;}
+  .status-btn{width:44px;font-size:10px;}
 }
-/* ── End TruckCheck styles ── */
 
-.tc-view{display:none;}
-.tc-view.active{display:block;}
 </style>
-
-<style>
-/* ── TruckCheck inline module styles ── */
-.tc-view{display:none;}.tc-view.active{display:block;}
-.app-main{max-width:900px;margin:0 auto;padding:32px 24px;}
-@media(max-width:640px){.app-main{padding:18px 14px;}}
-</style>
-
 </head>
 <body>
 
@@ -576,9 +511,9 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-
   <div class="modal">
     <div class="modal-header">
       <div class="modal-title" id="modalTitle">Run Report</div>
-      <button class="modal-close" onclick="tcCloseModal()">✕</button>
+      <button class="modal-close" onclick="closeModal()">✕</button>
     </div>
-    <div class="modal-body" id="tcModalBody"></div>
+    <div class="modal-body" id="modalBody"></div>
   </div>
 </div>
 <div class="toast" id="toast"></div>
@@ -621,15 +556,15 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-
     </div>
   </div>
   <div class="portal-main">
-    <div class="portal-section-label">Run Information <span style="font-size:10px;color:var(--text-dim);font-family:'Barlow',sans-serif;text-transform:none;letter-spacing:0;">(JotForm setup required)</span></div>
+    <div class="portal-section-label">Run Information</div>
     <div class="module-grid">
-      <div class="module-card" style="--module-color:#dc2626;opacity:0.45;cursor:default;">
+      <div class="module-card" style="--module-color:#dc2626;opacity:0.4;cursor:default;">
         <span class="module-badge badge-soon">SOON</span>
         <span class="module-icon">📟</span>
         <div class="module-name">Run Log</div>
         <div class="module-desc">JotForm integration not yet configured</div>
       </div>
-      <div class="module-card" style="--module-color:#f59e0b;opacity:0.45;cursor:default;">
+      <div class="module-card" style="--module-color:#f59e0b;opacity:0.4;cursor:default;">
         <span class="module-badge badge-soon">SOON</span>
         <span class="module-icon">📊</span>
         <div class="module-name">Run Statistics</div>
@@ -658,12 +593,12 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-
     <div id="gatedSections" style="display:none;">
       <div class="portal-section-label">Operational Tools <span class="gate-lock">🔓</span></div>
       <div class="module-grid">
-        <a class="module-card" onclick="openModule('truck-check')" href="#" style="--module-color:#dc2626">
+        <div class="module-card" style="--module-color:#dc2626" onclick="openModule('truck-check')">
           <span class="module-badge badge-live">LIVE</span>
           <span class="module-icon">🚒</span>
           <div class="module-name">Truck Checks</div>
           <div class="module-desc">NFPA 1911 apparatus inspections</div>
-        </a>
+        </div>
         <div class="module-card" style="--module-color:#2563eb" onclick="openModule('hose')">
           <span class="module-badge badge-live">LIVE</span>
           <span class="module-icon">🚿</span>
@@ -710,427 +645,6 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-
 </div>
 
 <!-- ══ RUN LOG ════════════════════════════════════════ -->
-<div class="view" id="view-run-log">
-  <div class="inner-header">
-    <button class="back-btn" onclick="goHome()">← Back</button>
-    <span class="inner-divider">/</span>
-    <span class="inner-title">Run Log</span>
-  </div>
-  <div class="module-content">
-    <div class="page-title">Incident & Run Log</div>
-    <div class="page-sub" id="runLogSub">2026 incidents from JotForm</div>
-    <div class="run-filters">
-      <button class="filter-btn active" onclick="setFilter('all',this)">All Runs</button>
-      <button class="filter-btn" onclick="setFilter('fire',this)">🔥 Fire / Vehicle</button>
-      <button class="filter-btn" onclick="setFilter('medical',this)">🚑 Medical</button>
-      <input class="filter-search" type="text" placeholder="Search call type, crew..." id="runSearch" oninput="applyFilters()">
-    </div>
-    <div id="runLogContent"><div class="loading-state"><div class="spinner"></div>Loading runs...</div></div>
-  </div>
-</div>
-
-<!-- ══ RUN STATS ══════════════════════════════════════ -->
-<div class="view" id="view-run-stats">
-  <div class="inner-header">
-    <button class="back-btn" onclick="goHome()">← Back</button>
-    <span class="inner-divider">/</span>
-    <span class="inner-title">Run Statistics</span>
-  </div>
-  <div class="module-content">
-    <div class="page-title">Run Statistics</div>
-    <div class="page-sub">5-year historical record · 2022 – 2026</div>
-    <div class="tab-nav">
-      <button class="tab-btn active" id="tab-thisyear" onclick="setStatsTab('thisyear',this)">This Year</button>
-      <button class="tab-btn" id="tab-trend" onclick="setStatsTab('trend',this)">All-Time Trend</button>
-      <button class="tab-btn" id="tab-leaderboard" onclick="setStatsTab('leaderboard',this)">Leaderboard</button>
-      <button class="tab-btn" id="tab-monthly" onclick="setStatsTab('monthly',this)">Monthly</button>
-      <button class="tab-btn" id="tab-members" onclick="setStatsTab('members',this)">By Member</button>
-      <button class="tab-btn" id="tab-missed" onclick="setStatsTab('missed',this)">Missed Calls</button>
-    </div>
-    <div id="stats-thisyear"></div>
-    <div id="stats-trend" style="display:none;"></div>
-    <div id="stats-leaderboard" style="display:none;"></div>
-    <div id="stats-monthly" style="display:none;"></div>
-    <div id="stats-members" style="display:none;"></div>
-    <div id="stats-missed" style="display:none;"></div>
-  </div>
-</div>
-
-<!-- ══ ROSTER ════════════════════════════════════════ -->
-<div class="view" id="view-roster">
-  <div class="inner-header">
-    <button class="back-btn" onclick="goHome()">← Back</button>
-    <span class="inner-divider">/</span>
-    <span class="inner-title">Member Roster</span>
-  </div>
-  <div class="module-content">
-    <div class="page-title">Active Roster</div>
-    <div class="page-sub">Peoria Volunteer Fire Department</div>
-    <div class="roster-grid" id="rosterGrid"></div>
-  </div>
-</div>
-
-<!-- ══ SCBA CHECKS ════════════════════════════════════ -->
-<div class="view" id="view-scba">
-  <div class="inner-header">
-    <button class="back-btn" onclick="goHome()">← Back</button>
-    <span class="inner-divider">/</span>
-    <span class="inner-title">SCBA Checks</span>
-  </div>
-  <div class="module-content">
-    <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:16px;">
-      <div>
-        <div class="page-title">SCBA Inventory & Inspection</div>
-        <div class="page-sub">NFPA 1852 · Packs, Cylinders (2216 &amp; 4500 PSI), Face Pieces · Annual flow test + monthly checks</div>
-      </div>
-    </div>
-    <div class="scba-tab-nav">
-      <button class="scba-tab-btn active" onclick="setScbaTab('packs',this)">😮‍💨 Packs</button>
-      <button class="scba-tab-btn" onclick="setScbaTab('cylinders',this)">🔴 Cylinders</button>
-      <button class="scba-tab-btn" onclick="setScbaTab('masks',this)">🥽 Face Pieces</button>
-      <button class="scba-tab-btn" onclick="setScbaTab('inspect',this)">✅ Run Inspection</button>
-    </div>
-    <div id="scba-packs-panel"></div>
-    <div id="scba-cylinders-panel" style="display:none;"></div>
-    <div id="scba-masks-panel" style="display:none;"></div>
-    <div id="scba-inspect-panel" style="display:none;"></div>
-  </div>
-</div>
-
-<!-- SCBA add/edit modal -->
-<div class="scba-modal-overlay" id="scbaModal">
-  <div class="scba-modal">
-    <div class="scba-modal-header">
-      <div class="modal-title" id="scbaModalTitle">Add Equipment</div>
-      <button class="modal-close" onclick="closeScbaModal()">✕</button>
-    </div>
-    <div class="scba-modal-body" id="scbaModalBody"></div>
-  </div>
-</div>
-
-<!-- SCBA inspection result modal -->
-<div class="scba-modal-overlay" id="scbaInspModal">
-  <div class="scba-modal">
-    <div class="scba-modal-header">
-      <div class="modal-title" id="scbaInspModalTitle">Inspection Complete</div>
-      <button class="modal-close" onclick="document.getElementById('scbaInspModal').classList.remove('visible')">✕</button>
-    </div>
-    <div class="scba-modal-body" id="scbaInspModalBody"></div>
-  </div>
-</div>
-
-<!-- ══ HYDRANT FLOW TESTS ══════════════════════════════ -->
-<div class="view" id="view-hydrant">
-  <div class="inner-header">
-    <button class="back-btn" onclick="goHome()">← Back</button>
-    <span class="inner-divider">/</span>
-    <span class="inner-title">Hydrant Flow Tests</span>
-  </div>
-  <div class="module-content">
-    <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:8px;">
-      <div>
-        <div class="page-title">Hydrant Flow Test Records</div>
-        <div class="page-sub">ISO / NFPA 291 · JotForm records + locally recorded tests</div>
-      </div>
-    </div>
-
-    <div class="tab-nav" style="margin-bottom:16px;">
-      <button class="tab-btn active" id="htab-map" onclick="setHydTab('map',this)">🗺️ Map</button>
-      <button class="tab-btn" id="htab-list" onclick="setHydTab('list',this)">📋 Records</button>
-      <button class="tab-btn" id="htab-test" onclick="setHydTab('test',this)">💧 Record Test</button>
-    </div>
-
-    <!-- MAP PANEL -->
-    <div id="hyd-map-panel">
-      <div style="display:flex;gap:16px;margin-bottom:12px;flex-wrap:wrap;align-items:center;">
-        <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-muted);">
-          <span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#2563eb;border:2px solid #93c5fd;flex-shrink:0;"></span>Flow Test on Record
-        </div>
-        <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-muted);">
-          <span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#dc2626;border:2px solid #f87171;flex-shrink:0;"></span>Not Yet Tested
-        </div>
-        <div style="margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-dim);" id="hydMapCount"></div>
-      </div>
-      <div id="hydrantMapContainer" style="width:100%;height:560px;border-radius:8px;border:1px solid var(--border);overflow:hidden;"></div>
-    </div>
-
-    <!-- LIST PANEL -->
-    <div id="hyd-list-panel">
-      <div class="hyd-summary-row" id="hydSummaryRow"></div>
-      <div class="hyd-detail-card" id="hydDetailCard">
-        <div class="hyd-detail-header">
-          <div class="hyd-detail-title" id="hydDetailTitle"></div>
-          <button class="card-action" onclick="closeHydDetail()">✕ Close</button>
-        </div>
-        <div class="hyd-detail-body" id="hydDetailBody"></div>
-      </div>
-      <div class="hyd-filter-row">
-        <button class="hyd-filter-btn active" onclick="setHydFilter('all',this)">All Tests</button>
-        <button class="hyd-filter-btn" onclick="setHydFilter('1000',this)">🟢 ≥1,000 GPM</button>
-        <button class="hyd-filter-btn" onclick="setHydFilter('500',this)">🟡 500–1K GPM</button>
-        <button class="hyd-filter-btn" onclick="setHydFilter('low',this)">🔴 &lt;500 GPM</button>
-        <input class="hyd-search" type="text" id="hydSearch" placeholder="Search location..." oninput="renderHydTable()">
-      </div>
-      <div id="hydTableWrap"></div>
-    </div>
-
-    <!-- RECORD TEST PANEL -->
-    <div id="hyd-test-panel" style="display:none;">
-      <div style="max-width:680px;">
-        <div style="font-size:12px;color:var(--text-muted);background:rgba(37,99,235,.07);border:1px solid rgba(37,99,235,.2);border-radius:var(--radius);padding:10px 14px;margin-bottom:20px;line-height:1.6;">
-          📋 <strong>NFPA 291 Flow Test Procedure:</strong> Open flow hydrant fully · Record static pressure before flow · Open test hydrant, record pitot and residual · Calculate flow using C×d²×√p formula · Tests require two hydrants minimum.
-        </div>
-        <div class="card" style="margin-bottom:16px;">
-          <div class="card-header"><div class="card-title">Hydrant Identification</div></div>
-          <div style="padding:18px 20px;">
-            <div class="htest-form-grid">
-              <div class="htest-field">
-                <label class="htest-label">Hydrant Location</label>
-                <input class="htest-input" id="ftLocationCustom" placeholder="e.g. 3rd & Main St">
-              </div>
-              <div class="htest-field">
-                <label class="htest-label">Hydrant ID (optional)</label>
-                <input class="htest-input" id="ftHydrantId" placeholder="e.g. H-042">
-              </div>
-              <div class="htest-field">
-                <label class="htest-label">Date of Test</label>
-                <input class="htest-input" id="ftDate" type="date">
-              </div>
-              <div class="htest-field">
-                <label class="htest-label">Time of Test</label>
-                <input class="htest-input" id="ftTime" type="time">
-              </div>
-              <div class="htest-field">
-                <label class="htest-label">Tested By</label>
-                <select class="htest-input" id="ftTestedBy" style="background:var(--surface2);">
-                  <option value="">Select member...</option>
-                </select>
-              </div>
-              <div class="htest-field">
-                <label class="htest-label">Witness</label>
-                <select class="htest-input" id="ftWitness" style="background:var(--surface2);">
-                  <option value="">Select member...</option>
-                </select>
-              </div>
-              <div class="htest-field full">
-                <label class="htest-label">Test Purpose / Notes</label>
-                <input class="htest-input" id="ftPurpose" placeholder="Describe why this test was conducted, hydrants used for static vs pitot, etc.">
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card" style="margin-bottom:16px;">
-          <div class="card-header"><div class="card-title">Pressure Readings</div></div>
-          <div style="padding:18px 20px;">
-            <div style="font-size:12px;color:var(--text-muted);margin-bottom:14px;">Record pressures in PSI. Use a calibrated gauge.</div>
-            <div class="htest-form-grid">
-              <div class="htest-field">
-                <label class="htest-label">Static Pressure (PSI)</label>
-                <input class="htest-input" id="ftStatic" type="number" min="0" max="200" step="0.5" placeholder="e.g. 62" oninput="updateHydCalc()">
-                <div style="font-size:11px;color:var(--text-dim);margin-top:3px;">Measured before flowing</div>
-              </div>
-              <div class="htest-field">
-                <label class="htest-label">Residual Pressure (PSI)</label>
-                <input class="htest-input" id="ftResidual" type="number" min="0" max="200" step="0.5" placeholder="e.g. 42" oninput="updateHydCalc()">
-                <div style="font-size:11px;color:var(--text-dim);margin-top:3px;">Measured while flowing</div>
-              </div>
-              <div class="htest-field">
-                <label class="htest-label">Pitot Pressure (PSI)</label>
-                <input class="htest-input" id="ftPitot" type="number" min="0" max="200" step="0.5" placeholder="e.g. 26" oninput="updateHydCalc()">
-                <div style="font-size:11px;color:var(--text-dim);margin-top:3px;">Measured at flowing nozzle</div>
-              </div>
-              <div class="htest-field">
-                <label class="htest-label">Nozzle Diameter (inches)</label>
-                <select class="htest-input" id="ftNozzleDiam" style="background:var(--surface2);" onchange="updateHydCalc()">
-                  <option value="2.5">2½" (standard)</option>
-                  <option value="4">4" (steamer)</option>
-                  <option value="1.5">1½"</option>
-                </select>
-              </div>
-              <div class="htest-field">
-                <label class="htest-label">Discharge Coefficient (C)</label>
-                <select class="htest-input" id="ftCoeff" style="background:var(--surface2);" onchange="updateHydCalc()">
-                  <option value="0.9">0.90 — Smooth/rounded outlet</option>
-                  <option value="0.8" selected>0.80 — Square-cut (most common)</option>
-                  <option value="0.7">0.70 — Projecting / rough outlet</option>
-                </select>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card" style="margin-bottom:16px;">
-          <div class="card-header"><div class="card-title">Calculated Results</div><span style="font-size:11px;color:var(--text-muted);">Updates automatically</span></div>
-          <div style="padding:18px 20px;">
-            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:12px;">
-              <div style="background:var(--surface2);border-radius:var(--radius);padding:14px;text-align:center;">
-                <div style="font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:700;color:var(--green);" id="calcFlowGPM">—</div>
-                <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-top:3px;">Flow (GPM)</div>
-              </div>
-              <div style="background:var(--surface2);border-radius:var(--radius);padding:14px;text-align:center;">
-                <div style="font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:700;color:var(--blue);" id="calcPDrop">—</div>
-                <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-top:3px;">Pressure Drop (PSI)</div>
-              </div>
-              <div style="background:var(--surface2);border-radius:var(--radius);padding:14px;text-align:center;">
-                <div style="font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700;" id="calcRating">—</div>
-                <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-top:3px;">ISO Rating</div>
-              </div>
-            </div>
-            <div style="background:var(--surface2);border-radius:var(--radius);padding:12px 16px;font-size:13px;" id="calcFlowAt20Wrap" style="display:none;">
-              <span style="color:var(--text-muted);">Projected flow at 20 PSI residual (ISO available flow):</span>
-              <span style="font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--amber);margin-left:8px;" id="calcFlowAt20">—</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="card" style="margin-bottom:20px;">
-          <div class="card-header"><div class="card-title">Hydrant Condition</div></div>
-          <div style="padding:18px 20px;">
-            <div class="htest-form-grid">
-              <div class="htest-field">
-                <label class="htest-label">Overall Condition</label>
-                <select class="htest-input" id="ftCondition" style="background:var(--surface2);">
-                  <option value="good">Good — No deficiencies</option>
-                  <option value="minor">Minor — Needs attention</option>
-                  <option value="major">Major — Repair required</option>
-                  <option value="oos">Out of Service</option>
-                </select>
-              </div>
-              <div class="htest-field">
-                <label class="htest-label">Flow Rating (field assessment)</label>
-                <select class="htest-input" id="ftNozzleRate" style="background:var(--surface2);">
-                  <option value="1,500 gpm or greater">≥ 1,500 GPM</option>
-                  <option value="1,000 gpm or greater">≥ 1,000 GPM</option>
-                  <option value="500 to 1,000 gpm">500 – 1,000 GPM</option>
-                  <option value="Smaller than 500 gpm">&lt; 500 GPM</option>
-                </select>
-              </div>
-              <div class="htest-field full">
-                <label class="htest-label">Deficiencies / Observations</label>
-                <input class="htest-input" id="ftDeficiencies" placeholder="e.g. Slow stem nut, minor rust, outlets clear...">
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div style="display:flex;gap:12px;justify-content:flex-end;margin-bottom:32px;">
-          <button class="btn-secondary" onclick="clearHydTestForm()">Clear Form</button>
-          <button class="btn-primary" style="background:var(--blue);padding:10px 28px;" onclick="saveHydrantTest()">💾 Save Test Record</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ══ HOSE TESTS ══════════════════════════════════════ -->
-<div class="view" id="view-hose">
-  <div class="inner-header">
-    <button class="back-btn" onclick="goHome()">← Back</button>
-    <span class="inner-divider">/</span>
-    <span class="inner-title">Hose Tests</span>
-  </div>
-  <div class="module-content">
-    <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:8px;">
-      <div>
-        <div class="page-title">Hose Test Records</div>
-        <div class="page-sub">NFPA 1962 Service Testing · 1.75" @ 300 PSI · 2.5" @ 300 PSI · 3" @ 200 PSI · 3-minute duration</div>
-      </div>
-      <button class="hose-test-btn" onclick="openHoseTestModal()">+ Record Test</button>
-    </div>
-    <div class="hose-size-tabs">
-      <button class="hose-size-btn active" onclick="setHoseSize('1.75',this)">1¾" Hose</button>
-      <button class="hose-size-btn" onclick="setHoseSize('2.5',this)">2½" Hose</button>
-      <button class="hose-size-btn" onclick="setHoseSize('3',this)">3" Hose</button>
-    </div>
-    <div class="hose-summary-row" id="hoseSummary"></div>
-    <div class="hose-filter-row">
-      <button class="hose-status-btn active" onclick="setHoseFilter('all',this)">All</button>
-      <button class="hose-status-btn" onclick="setHoseFilter('pass',this)">✓ Passed</button>
-      <button class="hose-status-btn" onclick="setHoseFilter('fail',this)">✕ Failed / BAD</button>
-      <button class="hose-status-btn" onclick="setHoseFilter('untested',this)">— Not Tested</button>
-      <input class="hose-search" type="text" placeholder="Search hose #..." id="hoseSearch" oninput="renderHoseTable()">
-    </div>
-    <div id="hoseTableWrap"></div>
-  </div>
-</div>
-
-<!-- Hose test record modal -->
-<div class="hose-modal-overlay" id="hoseTestModal">
-  <div class="hose-modal">
-    <div class="hose-modal-header">
-      <div class="modal-title">Record Hose Test</div>
-      <button class="modal-close" onclick="closeHoseModal()">✕</button>
-    </div>
-    <div class="hose-modal-body">
-      <div class="hose-psi-note" id="hosePsiNote">1¾" hose tested at <strong>300 PSI</strong> for 3 minutes (NFPA 1962)</div>
-      <div class="htest-form-grid">
-        <div class="htest-field">
-          <label class="htest-label">Hose Size</label>
-          <select class="htest-select" id="htSize" onchange="updatePsiNote()">
-            <option value="1.75">1¾" Hose</option>
-            <option value="2.5">2½" Hose</option>
-            <option value="3">3" Hose</option>
-          </select>
-        </div>
-        <div class="htest-field">
-          <label class="htest-label">Hose Number</label>
-          <input class="htest-input" id="htHoseNum" placeholder="e.g. 101" type="text">
-        </div>
-        <div class="htest-field">
-          <label class="htest-label">Test Date</label>
-          <input class="htest-input" id="htDate" type="date">
-        </div>
-        <div class="htest-field">
-          <label class="htest-label">Result</label>
-          <select class="htest-select" id="htResult">
-            <option value="PASS">✓ Passed</option>
-            <option value="FAIL">✕ Failed (BAD)</option>
-          </select>
-        </div>
-        <div class="htest-field">
-          <label class="htest-label">Tester Name</label>
-          <input class="htest-input" id="htTester" placeholder="Your name">
-        </div>
-        <div class="htest-field">
-          <label class="htest-label">Actual PSI Reached</label>
-          <input class="htest-input" id="htPsi" placeholder="e.g. 300" type="number">
-        </div>
-        <div class="htest-field full">
-          <label class="htest-label">Notes (optional — failure reason, coupling condition, etc.)</label>
-          <input class="htest-input" id="htNotes" placeholder="e.g. Pinhole leak at coupling, jacket abrasion at 25ft mark...">
-        </div>
-      </div>
-      <div class="btn-row">
-        <button class="btn-secondary" onclick="closeHoseModal()">Cancel</button>
-        <button class="btn-primary" onclick="saveHoseTest()">Save Record</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ══ FIRE SUBSCRIPTIONS ══════════════════════════════ -->
-<!-- ══ COMING SOON ════════════════════════════════════ -->
-<div class="view" id="view-coming-soon">
-  <div class="inner-header">
-    <button class="back-btn" onclick="goHome()">← Back</button>
-    <span class="inner-divider">/</span>
-    <span class="inner-title" id="csInnerTitle">Coming Soon</span>
-  </div>
-  <div class="module-content">
-    <div class="coming-soon">
-      <span class="cs-icon" id="csIcon">🚧</span>
-      <div class="cs-title" id="csTitle">Under Construction</div>
-      <div class="cs-sub" id="csSub"></div>
-      <div class="cs-features" id="csFeatures"></div>
-      <div style="font-size:12px;color:var(--text-dim);">Contact your portal administrator to prioritize this module.</div>
-    </div>
-  </div>
-</div>
-
-
-
-<!-- ══ TRUCK CHECK ═══════════════════════════════════════ -->
 <div class="view" id="view-run-log">
   <div class="inner-header">
     <button class="back-btn" onclick="goHome()">← Back</button>
@@ -1648,7 +1162,7 @@ const FORM_MISSED = 'PLACEHOLDER_MISSED_FORM_ID';
 // ═══════════════════════════════════════════════
 const HIST = {
   2026: {
-    total: 0, missed: null, missedNote: 'Loading...', missedDetails: null, liveLoaded: false,
+    total: 0, missed: null, missedNote: 'JotForm not configured', missedDetails: null, liveLoaded: false,
     monthly: [0,0,0,0,0,0,0,0,0,0,0,0],
     members: []
   }
@@ -1662,9 +1176,7 @@ let currentStatsTab = 'thisyear';
 // ═══════════════════════════════════════════════
 // ROSTER
 // ═══════════════════════════════════════════════
-const ROSTER = [
-  // Add member names here — must match JotForm entries exactly
-];
+const ROSTER = [];
 
 // ═══════════════════════════════════════════════
 // CLOCK & ROUTING
@@ -1685,7 +1197,7 @@ document.addEventListener('DOMContentLoaded', async function(){
     setAuthState(!!session, session?.user?.email || null);
   });
 
-  // JotForm not configured yet — run stats load disabled
+  // JotForm not configured yet
 });
 
 function showView(id){document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.getElementById('view-'+id).classList.add('active');window.scrollTo(0,0);}
@@ -1731,14 +1243,11 @@ async function openModule(mod){
 
 // ═══════════════════════════════════════════════
 // HYDRANT MAP MODULE
-// Hydrant locations — add via Pin Editor for Peoria district
+// Hydrant locations — add via Pin Editor
 // ═══════════════════════════════════════════════
 
 // All hydrant locations — coordinates placed manually by Jason Garrison 2026
-const HYDRANT_LOCATIONS = [
-  // Add hydrant locations here using the Pin Editor
-  // Format: {id:'h01', label:'Location Name', lat:36.9518, lng:-94.7872}
-];
+const HYDRANT_LOCATIONS = [];
 
 // Flow test records from JotForm
 const HYDRANT_TESTS = [];
@@ -2812,46 +2321,569 @@ function saveHoseTest(){
 
 
 
-
 // ═══════════════════════════════════════════════
-// RUN STATS — stubs until JotForm configured
+// RUN STATS
 // ═══════════════════════════════════════════════
-let allRuns=[], filteredRuns=[], displayCount=50, activeFilter='all', runsLoaded=false;
-let selectedYear=2026, currentStatsTab='thisyear';
-const MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-
-function setStatsTab(tab,btn){ }
-function renderStatsTab(tab){ }
-function renderThisYear(){ }
-function renderTrend(){ }
-function renderLeaderboard(){ }
-function renderMonthly(){ }
-function renderMembers(){ }
-function renderMissed(){ }
-function selectYear(y,tab){ }
-function updateHomeStats(){ }
-function compute2026MemberStats(){ }
-function parseRunDate(d){ return null; }
-function getAns(a,l){ return ''; }
-function getArr(a,l){ return []; }
-function parseFire(s){ return {}; }
-function parseMed(s){ return {}; }
-function getDemoRuns(){ return []; }
-function renderRunEntry(r){ return ''; }
-function openRunDetail(id){ }
-function closeModal(){ document.getElementById('runModal')?.classList.remove('visible'); }
-function setRunFilter(f,btn){ }
-
-// ═══════════════════════════════════════════════
-// JOTFORM — NOT YET CONFIGURED
-// Stub these out so nothing errors on load
-// ═══════════════════════════════════════════════
-function load2026MissedCalls(){ return; }
-function ensureRunsLoaded(){ return; }
-function renderRunLog(){ 
-  const el = document.getElementById('runLogContent');
-  if(el) el.innerHTML = '<div class="empty-state"><div style="font-size:40px;margin-bottom:12px;">📋</div><div style="font-family:'Oswald',sans-serif;font-size:16px;text-transform:uppercase;margin-bottom:8px;">JotForm Not Configured</div><div style="font-size:13px;color:var(--text-muted);">Run log will appear here once JotForm forms and the proxy edge function are set up.</div></div>';
+function setStatsTab(tab,btn){
+  currentStatsTab=tab;
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  ['thisyear','trend','leaderboard','monthly','members','missed'].forEach(t=>{
+    document.getElementById('stats-'+t).style.display=t===tab?'':'none';
+  });
+  renderStatsTab(tab);
 }
+function renderStatsTab(tab){
+  if(tab==='thisyear') renderThisYear();
+  if(tab==='trend') renderTrend();
+  if(tab==='leaderboard') renderLeaderboard();
+  if(tab==='monthly') renderMonthly();
+  if(tab==='members') renderMembers();
+  if(tab==='missed') renderMissed();
+}
+
+// ── This Year (2026) Per-Firefighter ─────────────────
+function renderThisYear(){
+  const el=document.getElementById('stats-thisyear');
+  if(!runsLoaded){
+    el.innerHTML=`<div class="card"><div style="padding:32px;text-align:center;"><div class="spinner" style="margin:0 auto 10px;"></div><div style="font-size:13px;color:var(--text-muted);">Loading live 2026 run data from JotForm...</div></div></div>`;
+    // Kick off load; compute2026MemberStats will re-render when done
+    return;
+  }
+  const sorted=[...HIST[2026].members].sort((a,b)=>b.total-a.total);
+  const max=sorted[0]?.total||1;
+  const total=HIST[2026].total;
+  const missed=HIST[2026].missed;
+  const grandTotal=(missed!=null) ? total+missed : null;
+  const yearColors={2022:'#dc2626',2023:'#f59e0b',2024:'#2563eb',2025:'#16a34a',2026:'#8b5cf6'};
+  el.innerHTML=`
+    <div class="year-summary-cards" style="grid-template-columns:repeat(5,1fr);margin-bottom:20px;">
+      <div class="yscard"><div class="yscard-val" style="color:var(--red);">${grandTotal!=null?grandTotal:'…'}</div><div class="yscard-lbl">Total Calls (YTD)</div></div>
+      <div class="yscard"><div class="yscard-val" style="color:var(--green);">${total}</div><div class="yscard-lbl">Responded</div></div>
+      <div class="yscard"><div class="yscard-val" style="color:${missed?'var(--amber)':'var(--text-muted)'};">${missed!=null?missed:'…'}</div><div class="yscard-lbl">Missed</div></div>
+      <div class="yscard"><div class="yscard-val">${sorted[0]?.total||'—'}</div><div class="yscard-lbl">Top Run Count</div></div>
+      <div class="yscard"><div class="yscard-val" style="color:var(--text-muted);">${sorted.length}</div><div class="yscard-lbl">Active Responders</div></div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">2026 YTD — Runs Per Firefighter</div>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-muted);">Live from JotForm · Through ${new Date().toLocaleDateString('en-US',{month:'short',day:'numeric'})}</span>
+      </div>
+      <table class="leaderboard">
+        <thead><tr><th>#</th><th>Member</th><th>Runs</th><th>Volume</th><th>% of Calls</th></tr></thead>
+        <tbody>
+          ${sorted.map((m,i)=>`
+            <tr class="rank-${i+1}">
+              <td class="rank-num">${i+1}</td>
+              <td style="font-weight:600;font-size:14px;">${m.name}</td>
+              <td style="font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;color:${yearColors[2026]};">${m.total}</td>
+              <td><div class="run-bar-wrap" style="width:140px;"><div class="run-bar" style="width:${Math.round(m.total/max*100)}%;background:${yearColors[2026]};"></div></div></td>
+              <td style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-muted);">${(m.total/total*100).toFixed(1)}%</td>
+            </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>`;
+}
+
+// ── All-Time Trend ───────────────────────────────
+function renderTrend(){
+  const el=document.getElementById('stats-trend');
+  const maxTotal=Math.max(...YEARS.map(y=>HIST[y].total));
+  // All-time top 5 by summing across years
+  const allMember={};
+  YEARS.forEach(y=>{
+    HIST[y].members.forEach(m=>{
+      if(!allMember[m.name]) allMember[m.name]=0;
+      allMember[m.name]+=m.total;
+    });
+  });
+  const top5=Object.entries(allMember).sort((a,b)=>b[1]-a[1]).slice(0,10);
+  const maxAll=top5[0][1];
+
+  const yearColors={2022:'#dc2626',2023:'#f59e0b',2024:'#2563eb',2025:'#16a34a',2026:'#8b5cf6'};
+
+  el.innerHTML=`
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+      <div class="card">
+        <div class="card-header"><div class="card-title">Annual Run Volume</div></div>
+        <div class="trend-chart">
+          ${YEARS.map(y=>`
+            <div class="trend-row">
+              <div class="trend-year">${y}</div>
+              <div class="trend-bar-wrap">
+                <div class="trend-bar-inner" style="width:${Math.round(HIST[y].total/maxTotal*100)}%;background:${yearColors[y]};">
+                  ${HIST[y].total>=40?HIST[y].total:''}
+                </div>
+              </div>
+              <div class="trend-total">${HIST[y].total}</div>
+            </div>`).join('')}
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">Missed / No Response</div></div>
+        <div class="trend-chart">
+          ${YEARS.map(y=>{
+            const m=HIST[y].missed;
+            const maxM=218;
+            return `
+            <div class="trend-row">
+              <div class="trend-year">${y}</div>
+              <div class="trend-bar-wrap">
+                <div class="trend-bar-inner" style="width:${m?Math.round(m/maxM*100):4}%;background:${m?'var(--amber)':'var(--text-dim)'};">
+                  ${m>=20?m:''}
+                </div>
+              </div>
+              <div class="trend-total" style="color:${m?'var(--amber)':'var(--text-dim)'};">${m||'—'}</div>
+            </div>`;}).join('')}
+        </div>
+        <div style="padding:0 20px 16px;font-size:11px;color:var(--text-dim);">* 2022 not tracked · 2026 YTD Apr</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">All-Time Top Responders (2022–2026)</div>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-muted);">Combined 5-year totals</span>
+      </div>
+      <table class="leaderboard">
+        <thead><tr><th>#</th><th>Member</th><th>5-Yr Total</th><th></th><th>2022</th><th>2023</th><th>2024</th><th>2025</th><th>2026</th></tr></thead>
+        <tbody>
+          ${top5.map(([name,tot],i)=>{
+            const byYear=YEARS.map(y=>{
+              const m=HIST[y].members.find(x=>x.name===name);
+              return m?m.total:0;
+            });
+            return `
+              <tr class="rank-${i+1}">
+                <td class="rank-num">${i+1}</td>
+                <td style="font-weight:600;font-size:14px;">${name}</td>
+                <td style="font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:700;color:var(--red);">${tot}</td>
+                <td><div class="run-bar-wrap"><div class="run-bar" style="width:${Math.round(tot/maxAll*100)}%"></div></div></td>
+                ${byYear.map((v,yi)=>`<td style="font-family:'JetBrains Mono',monospace;font-size:12px;color:${v>0?yearColors[YEARS[yi]]:'var(--text-dim)'};">${v||'—'}</td>`).join('')}
+              </tr>`;
+          }).join('')}
+        </tbody>
+      </table>
+    </div>`;
+}
+
+// ── Per-Year Leaderboard ─────────────────────────
+function renderLeaderboard(){
+  const el=document.getElementById('stats-leaderboard');
+  if(selectedYear===2026 && !runsLoaded){
+    el.innerHTML=`<div class="year-selector">${YEARS.map(y=>`<button class="year-btn ${y===selectedYear?'active':''}" onclick="selectYear(${y},'leaderboard')">${y}</button>`).join('')}</div><div class="card" style="margin-top:4px;"><div style="padding:32px;text-align:center;"><div class="spinner" style="margin:0 auto 10px;"></div><div style="font-size:13px;color:var(--text-muted);">Loading live run data from JotForm...</div></div></div>`;
+    return;
+  }
+  const sorted=[...HIST[selectedYear].members].sort((a,b)=>b.total-a.total);
+  const max=sorted[0]?.total||1;
+  el.innerHTML=`
+    <div class="year-selector">${YEARS.map(y=>`<button class="year-btn ${y===selectedYear?'active':''}" onclick="selectYear(${y},'leaderboard')">${y}</button>`).join('')}</div>
+    <div class="year-summary-cards" style="grid-template-columns:repeat(3,1fr);">
+      <div class="yscard"><div class="yscard-val" style="color:var(--red);">${HIST[selectedYear].total}</div><div class="yscard-lbl">Total Runs</div></div>
+      <div class="yscard"><div class="yscard-val" style="color:${HIST[selectedYear].missed?'var(--amber)':'var(--text-muted)'};">${HIST[selectedYear].missed??'…'}</div>${HIST[selectedYear].missedNote?`<div style="font-size:10px;color:var(--text-dim);margin-top:1px;">${HIST[selectedYear].missedNote}</div>`:''}<div class="yscard-lbl">Missed Calls</div></div>
+      <div class="yscard"><div class="yscard-val">${sorted[0]?.total||'—'}</div><div class="yscard-lbl">Top Run Count</div></div>
+    </div>
+    <div class="card">
+      <div class="card-header"><div class="card-title">${selectedYear} — Member Leaderboard</div></div>
+      <table class="leaderboard">
+        <thead><tr><th>#</th><th>Member</th><th>Runs</th><th>Volume</th><th>% of Calls</th></tr></thead>
+        <tbody>
+          ${sorted.map((m,i)=>`
+            <tr class="rank-${i+1}">
+              <td class="rank-num">${i+1}</td>
+              <td style="font-weight:600;font-size:14px;">${m.name}</td>
+              <td style="font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;">${m.total}</td>
+              <td><div class="run-bar-wrap"><div class="run-bar" style="width:${Math.round(m.total/max*100)}%"></div></div></td>
+              <td style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-muted);">${(m.total/HIST[selectedYear].total*100).toFixed(1)}%</td>
+            </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>`;
+}
+
+// ── Monthly Chart ─────────────────────────────────
+function renderMonthly(){
+  const el=document.getElementById('stats-monthly');
+  const mo=HIST[selectedYear].monthly;
+  const max=Math.max(...mo,1);
+  el.innerHTML=`
+    <div class="year-selector">${YEARS.map(y=>`<button class="year-btn ${y===selectedYear?'active':''}" onclick="selectYear(${y},'monthly')">${y}</button>`).join('')}</div>
+    <div class="card">
+      <div class="card-header"><div class="card-title">${selectedYear} — Monthly Run Volume</div><span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-muted);">Total: ${HIST[selectedYear].total}</span></div>
+      <div class="month-chart">
+        ${MONTHS.map((m,i)=>`
+          <div class="month-row">
+            <div class="month-lbl">${m}</div>
+            <div class="month-bar-wrap">
+              <div class="month-bar-inner" style="width:${mo[i]?Math.max(4,Math.round(mo[i]/max*100))+'%':'0%'}">
+                ${mo[i]>=8?mo[i]:''}
+              </div>
+            </div>
+            <div class="month-val">${mo[i]||(selectedYear===2026&&i>=4?'—':mo[i])}</div>
+          </div>`).join('')}
+      </div>
+    </div>`;
+}
+
+// ── By Member Cards ───────────────────────────────
+function renderMembers(){
+  const el=document.getElementById('stats-members');
+  if(selectedYear===2026 && !runsLoaded){
+    el.innerHTML=`<div class="year-selector">${YEARS.map(y=>`<button class="year-btn ${y===selectedYear?'active':''}" onclick="selectYear(${y},'members')">${y}</button>`).join('')}</div><div class="card" style="margin-top:4px;"><div style="padding:32px;text-align:center;"><div class="spinner" style="margin:0 auto 10px;"></div><div style="font-size:13px;color:var(--text-muted);">Loading live run data from JotForm...</div></div></div>`;
+    return;
+  }
+  const sorted=[...HIST[selectedYear].members].sort((a,b)=>b.total-a.total);
+  el.innerHTML=`
+    <div class="year-selector">${YEARS.map(y=>`<button class="year-btn ${y===selectedYear?'active':''}" onclick="selectYear(${y},'members')">${y}</button>`).join('')}</div>
+    <div class="member-grid">${sorted.map(m=>{
+      const maxMo=Math.max(...m.months,1);
+      return `<div class="mscard">
+        <div class="mscard-name">${m.name}</div>
+        <div class="mscard-total">${m.total}</div>
+        <div class="mscard-sub">${(m.total/HIST[selectedYear].total*100).toFixed(1)}% of ${selectedYear} calls</div>
+        <div class="mscard-months">${m.months.map((v,i)=>`<div class="mscard-mo ${v>0?'has':''}" style="${v>0?`opacity:${0.3+v/maxMo*0.7}`:'opacity:0.15'}" title="${MONTHS[i]}: ${v}"></div>`).join('')}</div>
+      </div>`;
+    }).join('')}</div>`;
+}
+
+// ── Missed Calls ──────────────────────────────────
+function renderMissed(){
+  const el=document.getElementById('stats-missed');
+  const y=HIST[selectedYear];
+
+  // For 2026, trigger live load if not yet done
+  if(selectedYear===2026 && !y.liveLoaded){
+    load2026MissedCalls();
+  }
+
+  const missedVal = y.missed!=null ? y.missed : '…';
+  const missedColor = y.missed ? 'var(--amber)' : 'var(--text-muted)';
+  const missRate = y.missed && y.total ? Math.round(y.missed/(y.total+y.missed)*100)+'%' : '—';
+
+  let detailHtml = '';
+  if(selectedYear===2026){
+    if(!y.liveLoaded){
+      detailHtml=`<div class="card" style="margin-top:12px;"><div style="padding:24px;text-align:center;"><div class="spinner" style="margin:0 auto 10px;"></div><div style="font-size:13px;color:var(--text-muted);">Loading live missed call records from JotForm...</div></div></div>`;
+    } else if(y.missedDetails && y.missedDetails.length){
+      detailHtml=`
+      <div class="card" style="margin-top:12px;">
+        <div class="card-header"><div class="card-title">2026 Missed Call Log</div><span style="font-size:11px;color:var(--text-dim);">Live from JotForm · ${y.missedDetails.length} records</span></div>
+        <div style="overflow-x:auto;">
+          <table class="leaderboard">
+            <thead><tr><th>Date</th><th>Time</th><th>Type</th></tr></thead>
+            <tbody>
+              ${y.missedDetails.map(m=>`
+                <tr>
+                  <td style="font-family:'JetBrains Mono',monospace;font-size:12px;white-space:nowrap;">${m.date||'—'}</td>
+                  <td style="font-family:'JetBrains Mono',monospace;font-size:12px;">${m.time||'—'}</td>
+                  <td style="font-size:13px;">${m.type||'—'}</td>
+                </tr>`).join('')}
+            </tbody>
+          </table>
+        </div>
+      </div>`;
+    } else {
+      detailHtml=`<div class="card" style="margin-top:12px;padding:20px;text-align:center;color:var(--text-muted);font-size:13px;">No missed call records found.</div>`;
+    }
+  }
+
+  el.innerHTML=`
+    <div class="year-selector">${YEARS.map(yr=>`<button class="year-btn ${yr===selectedYear?'active':''}" onclick="selectYear(${yr},'missed')">${yr}</button>`).join('')}</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;">
+      <div class="yscard"><div class="yscard-val" style="color:${missedColor};">${missedVal}</div>${y.missedNote&&y.liveLoaded===false||selectedYear!==2026?`<div style="font-size:10px;color:var(--text-dim);margin-top:1px;">${y.missedNote||''}</div>`:''}<div class="yscard-lbl">Missed ${selectedYear}</div></div>
+      <div class="yscard"><div class="yscard-val">${y.total}</div><div class="yscard-lbl">Responded</div></div>
+      <div class="yscard"><div class="yscard-val" style="color:${y.missed?'var(--amber)':'var(--text-muted)'};">${missRate}</div><div class="yscard-lbl">Miss Rate</div></div>
+    </div>
+    ${detailHtml}`;
+}
+
+function selectYear(y,tab){
+  selectedYear=y;
+  renderStatsTab(tab);
+}
+
+// Update the portal home YTD stat bar with live 2026 data
+function updateHomeStats(){
+  const el = id => document.getElementById(id);
+  const responded = HIST[2026].total;                          // runs from JotForm (responded)
+  const missed    = HIST[2026].missed;                         // missed calls from missed form
+  const ytd       = (missed != null) ? responded + missed : null; // total = responded + missed
+
+  if(el('homeYTD'))       el('homeYTD').textContent       = ytd       != null ? ytd.toLocaleString()       : '…';
+  if(el('homeMissed'))    el('homeMissed').textContent     = missed    != null ? missed.toLocaleString()     : '…';
+  if(el('homeResponded')) el('homeResponded').textContent  = responded != null ? responded.toLocaleString() : '…';
+}
+
+// ═══════════════════════════════════════════════
+// 2026 LIVE DATA — Missed Calls + Member Stats
+// ═══════════════════════════════════════════════
+
+let _missed2026Loading = false;
+
+async function load2026MissedCalls(){
+  if(_missed2026Loading || HIST[2026].liveLoaded) return;
+  _missed2026Loading = true;
+  try{
+    let all=[], offset=0;
+    while(true){
+      const r=await fetch(`${JOTFORM_PROXY}?form=${FORM_MISSED}&limit=100&offset=${offset}&orderby=created_at,DESC`);
+      const d=await r.json();
+      const batch=d.content||[];
+      all=all.concat(batch);
+      if(batch.length<100) break;
+      offset+=100;
+    }
+    // Parse each submission
+    const details = all.map(s=>{
+      const a=s.answers||{};
+      return {
+        date:  getAns(a,'date of missed') || getAns(a,'date'),
+        time:  getAns(a,'time of missed') || getAns(a,'time'),
+        type:  getAns(a,'type of call')   || getAns(a,'type'),
+        address: getAns(a,'address'),
+      };
+    }).filter(m=>m.date); // drop blanks
+
+    HIST[2026].missed = all.length;
+    HIST[2026].missedNote = null;
+    HIST[2026].missedDetails = details;
+    HIST[2026].liveLoaded = true;
+    updateHomeStats();
+
+    // Re-render if missed tab is currently visible
+    if(selectedYear===2026 && currentStatsTab==='missed') renderMissed();
+    // Also refresh leaderboard summary card count
+    if(selectedYear===2026 && currentStatsTab==='leaderboard') renderLeaderboard();
+    // Refresh thisyear summary cards (missed + total now available)
+    if(currentStatsTab==='thisyear') renderThisYear();
+
+  }catch(e){
+    HIST[2026].missed = '?';
+    HIST[2026].missedNote = 'Load failed';
+    HIST[2026].liveLoaded = true;
+    if(selectedYear===2026 && currentStatsTab==='missed') renderMissed();
+  }
+  _missed2026Loading = false;
+}
+
+// Called after allRuns loads — rebuilds 2026 member totals and monthly from live JotForm data
+function parseRunDate(dateStr){
+  if(!dateStr) return null;
+  // JotForm returns dates like "05 02 2026 2026-05-02 00:00:00" — a display
+  // format concatenated with an ISO timestamp. Pull out the YYYY-MM-DD part.
+  const isoMatch = dateStr.match(/(\d{4})-(\d{2})-(\d{2})/);
+  if(isoMatch) return {yr:isoMatch[1], mo:parseInt(isoMatch[2],10)-1};
+  // Fallback: MM/DD/YYYY
+  const mdyMatch = dateStr.match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+  if(mdyMatch) return {yr:mdyMatch[3], mo:parseInt(mdyMatch[1],10)-1};
+  return null;
+}
+
+function compute2026MemberStats(){
+  const runs2026 = allRuns.filter(r=>{
+    const d=parseRunDate(r.date||r.created||'');
+    return d && d.yr==='2026';
+  });
+
+  // Log first 3 2026 runs — members + date to diagnose counting
+  const sample2026 = runs2026.slice(0,3).map(r=>({
+    date: r.date,
+    members: r.membersResponding,
+    atStation: r.atStation,
+  }));
+  console.log('QFD 2026 sample runs:', JSON.stringify(sample2026));
+
+  // Count Jason specifically so we can see what's being counted
+  const jasonRuns = runs2026.filter(r=>{
+    const all = new Set([...(r.membersResponding||[]),...(r.atStation||[])].map(n=>n.trim()));
+    return [...all].some(n=>n.includes('Jason'));
+  });
+  console.log(`QFD: ${runs2026.length} 2026 runs total, Jason in ${jasonRuns.length}`);
+
+  // Build member totals + monthly breakdowns
+  const memberMap = {};
+  runs2026.forEach(r=>{
+    // Count membersResponding UNION atStation — a member gets credit once per call
+    // whether they responded or were at the station, but not both.
+    const responding = new Set((r.membersResponding||[]).map(n=>n.trim()).filter(Boolean));
+    (r.atStation||[]).forEach(n=>{ n=n.trim(); if(n) responding.add(n); });
+    const members = [...responding];
+    const d=parseRunDate(r.date||r.created||'');
+    const mo = d ? d.mo : -1;
+    if(mo<0||mo>11) return;
+    members.forEach(name=>{
+      name = name.trim();
+      if(!name) return;
+      if(!memberMap[name]) memberMap[name]={name, total:0, months:Array(12).fill(0)};
+      memberMap[name].total++;
+      memberMap[name].months[mo]++;
+    });
+  });
+
+  // Rebuild monthly totals
+  const monthly = Array(12).fill(0);
+  runs2026.forEach(r=>{
+    const d=parseRunDate(r.date||r.created||'');
+    const mo = d ? d.mo : -1;
+    if(mo>=0&&mo<=11) monthly[mo]++;
+  });
+
+  HIST[2026].total   = runs2026.length;
+  HIST[2026].monthly = monthly;
+  HIST[2026].members = Object.values(memberMap).sort((a,b)=>b.total-a.total);
+  updateHomeStats();
+
+  // Re-render current stats tab if it's a 2026 view
+  if(selectedYear===2026){
+    const tab = currentStatsTab;
+    if(['thisyear','leaderboard','members','trend','monthly'].includes(tab)) renderStatsTab(tab);
+  }
+}
+
+// ═══════════════════════════════════════════════
+// JOTFORM / RUN LOG
+// ═══════════════════════════════════════════════
+let allRuns=[],filteredRuns=[],displayCount=50,activeFilter='all',runsLoaded=false;
+
+function getAns(a,lbl){for(const q of Object.values(a)){if((q.text||'').toLowerCase().includes(lbl.toLowerCase())){if(Array.isArray(q.answer))return q.answer.join(', ');if(q.answer&&typeof q.answer==='object')return Object.values(q.answer).filter(Boolean).join(' ');return q.answer||'';}}return '';}
+function getArr(a,lbl){for(const q of Object.values(a)){if((q.text||'').toLowerCase().includes(lbl.toLowerCase())){if(Array.isArray(q.answer))return q.answer;if(q.answer&&typeof q.answer==='object')return Object.values(q.answer).filter(Boolean);if(q.answer)return[q.answer];}}return[];}
+function parseFire(s){const a=s.answers||{};return{id:s.id,type:'fire',date:getAns(a,'date'),timeCall:getAns(a,'time of call'),timeArrival:getAns(a,'time of arrival'),timeClear:getAns(a,'time clear'),address:getAns(a,'address'),callType:getAns(a,'type of call'),summary:getAns(a,'summary'),reportBy:getAns(a,'report by'),membersResponding:getArr(a,'members responding'),atStation:getArr(a,'at station'),trucksUsed:getArr(a,'trucks used'),equipmentGeneral:getArr(a,'general equipment'),equipmentRescue:getArr(a,'rescue equipment'),scbaPacks:getAns(a,'scba packs'),scbaBottles:getAns(a,'scba bottles'),propertyLoss:getAns(a,'property loss'),acres:getAns(a,'acres'),nerisEntered:getAns(a,'neris'),created:s.created_at};}
+function parseMed(s){const a=s.answers||{};return{id:s.id,type:'medical',date:getAns(a,'date'),timeCall:getAns(a,'time of call'),timeArrival:getAns(a,'time of arrival'),timeClear:getAns(a,'time clear'),address:getAns(a,'address'),callType:'Medical',chiefComplaint:getAns(a,'chief complaint'),patientAge:getAns(a,'age'),patientGender:getAns(a,'gender'),pmh:getAns(a,'past medical'),summary:getAns(a,'summary'),reportBy:getAns(a,'report by'),emsService:getAns(a,'ems service'),membersResponding:getArr(a,'members responding'),atStation:getArr(a,'at station'),nerisEntered:getAns(a,'neris'),created:s.created_at};}
+
+async function ensureRunsLoaded(statsMode=false){
+  if(runsLoaded){
+    // Runs already in memory — just compute stats and render
+    if(!statsMode) renderRunLog();
+    compute2026MemberStats();
+    return;
+  }
+  if(!JOTFORM_PROXY){
+    allRuns=getDemoRuns();runsLoaded=true;renderRunLog();
+    document.getElementById('runLogSub').innerHTML=`<span style="color:var(--amber)">⚠ Demo mode — add JotForm API key to pull live data</span>`;
+    return;
+  }
+  try{
+    document.getElementById('runLogContent').innerHTML=`<div class="loading-state"><div class="spinner"></div>Loading submissions...</div>`;
+
+    // Fetch each form independently so one failure doesn't kill both
+    async function fetchForm(formId, label){
+      if(!formId) return [];
+      try{
+        const r = await fetch(`${JOTFORM_PROXY}?form=${formId}&limit=1000&offset=0&orderby=created_at,DESC`);
+        if(!r.ok) throw new Error(`HTTP ${r.status}`);
+        const d = await r.json();
+        if(d.responseCode && d.responseCode !== 200) throw new Error(`JotForm ${d.responseCode}: ${d.message||'error'}`);
+        return d.content || [];
+      } catch(e){
+        console.warn(`Run log: ${label} form failed — ${e.message}`);
+        return [];
+      }
+    }
+
+    const [fs, ms] = await Promise.all([
+      fetchForm(FORM_FIRE, 'Fire/Vehicle'),
+      fetchForm(FORM_MED,  'Medical')
+    ]);
+
+    allRuns = [...fs.map(parseFire), ...ms.map(parseMed)]
+      .sort((a,b) => new Date(b.created||b.date||0) - new Date(a.created||a.date||0));
+
+    if(!allRuns.length){
+      document.getElementById('runLogContent').innerHTML=`<div class="empty-state">
+        <div style="font-size:40px;margin-bottom:12px;">⚠️</div>
+        <div style="font-family:'Oswald',sans-serif;font-size:16px;text-transform:uppercase;margin-bottom:8px;">Could Not Load Runs</div>
+        <div style="font-size:13px;color:var(--text-muted);max-width:400px;line-height:1.6;">
+          JotForm API returned no records. This is usually caused by:<br>
+          • Running from a <code>file://</code> URL (CORS) — host on GitHub Pages or a server<br>
+          • API key expired or incorrect<br>
+          • JotForm form ID mismatch
+        </div>
+      </div>`;
+      return;
+    }
+
+    runsLoaded = true;
+    if(!statsMode){
+      document.getElementById('runLogSub').textContent = `${allRuns.length.toLocaleString()} total incidents`;
+      renderRunLog();
+    }
+    compute2026MemberStats(); // rebuild live 2026 member stats from JotForm data
+
+  }catch(err){
+    document.getElementById('runLogContent').innerHTML=`<div class="empty-state">
+      <div style="font-size:40px;margin-bottom:12px;">⚠️</div>
+      <div style="font-family:'Oswald',sans-serif;font-size:16px;text-transform:uppercase;margin-bottom:8px;">Could Not Load</div>
+      <div style="font-size:13px;color:var(--text-muted);">${err.message}</div>
+      <div style="font-size:12px;color:var(--text-dim);margin-top:8px;">Check browser console for details.</div>
+    </div>`;
+  }
+}
+function getDemoRuns(){
+  const b=new Date(),d=n=>{const x=new Date(b);x.setDate(x.getDate()-n);return x.toISOString().split('T')[0];};
+  return[
+    {id:'d1',type:'fire',date:d(2),timeCall:'14:32',timeArrival:'14:41',callType:'Structure Fire',reportBy:'Jason Garrison',membersResponding:['Jason Garrison','Casey Abernathy'],trucksUsed:['Engine 21','Engine 22'],created:d(2)},
+    {id:'d2',type:'medical',date:d(4),timeCall:'09:14',timeArrival:'09:22',callType:'Medical',chiefComplaint:'Chest pain',patientAge:'67',reportBy:'Derek Boman',membersResponding:['Derek Boman','Will Langley'],emsService:'INTEGRIS EMS',created:d(4)},
+    {id:'d3',type:'fire',date:d(8),timeCall:'16:55',timeArrival:'17:04',callType:'Vehicle Accident',reportBy:'Clayton Hayes',membersResponding:['Clayton Hayes','Cody Murphy'],trucksUsed:['Rescue 23'],created:d(8)},
+  ];
+}
+function setFilter(f,btn){activeFilter=f;displayCount=50;document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');applyFilters();}
+function applyFilters(){
+  const s=(document.getElementById('runSearch')?.value||'').toLowerCase();
+  filteredRuns=allRuns.filter(r=>{
+    if(activeFilter==='fire'&&r.type!=='fire')return false;
+    if(activeFilter==='medical'&&r.type!=='medical')return false;
+    if(s&&!`${r.callType} ${r.reportBy}`.toLowerCase().includes(s))return false;
+    return true;
+  });
+  renderRunTable();
+}
+function renderRunLog(){filteredRuns=[...allRuns];renderRunTable();}
+function renderRunTable(){
+  const el=document.getElementById('runLogContent');
+  if(!filteredRuns.length){el.innerHTML=`<div class="empty-state"><div style="font-size:40px;margin-bottom:12px;">📋</div><div style="font-family:'Oswald',sans-serif;font-size:16px;font-weight:600;text-transform:uppercase;margin-bottom:4px;">No Runs Found</div></div>`;return;}
+  const slice=filteredRuns.slice(0,displayCount);
+  el.innerHTML=`<div class="run-table-wrap"><table class="run-table">
+    <thead><tr><th>Date / Time</th><th>Type</th><th>Call Type</th><th>Crew</th><th>Report By</th><th></th></tr></thead>
+    <tbody>${slice.map(r=>`
+      <tr>
+        <td style="font-family:'JetBrains Mono',monospace;font-size:11px;white-space:nowrap;">${fmtDate(r.date)}<br><span style="color:var(--text-dim)">${r.timeCall||''}</span></td>
+        <td>${r.type==='fire'?`<span class="run-type-badge badge-fire">🔥 FIRE/VEH</span>`:`<span class="run-type-badge badge-medical">🚑 MEDICAL</span>`}</td>
+        <td><div style="font-size:13px;font-weight:500;">${r.callType||'—'}</div></td>
+        <td style="font-size:12px;color:var(--text-muted);">${(r.membersResponding||[]).length?`${r.membersResponding.length} members`:'—'}</td>
+        <td style="font-size:12px;color:var(--text-muted);">${r.reportBy||'—'}</td>
+        <td><button class="card-action" onclick="viewRun('${r.id}')">View</button></td>
+      </tr>`).join('')}
+    </tbody></table>
+    ${filteredRuns.length>displayCount?`<button class="load-more-btn" onclick="loadMore()">Load More (${filteredRuns.length-displayCount} remaining)</button>`:''}
+  </div>`;
+}
+function loadMore(){displayCount+=50;renderRunTable();}
+function viewRun(id){
+  const r=allRuns.find(x=>x.id===id);if(!r)return;
+  const isFire=r.type==='fire';
+  document.getElementById('modalTitle').textContent=`${isFire?'🔥':'🚑'} ${r.callType||'Incident'} — ${fmtDate(r.date)}`;
+  const sec=(t,c)=>`<div style="margin-bottom:16px;"><div style="font-family:'Oswald',sans-serif;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-muted);margin-bottom:8px;">${t}</div>${c}</div>`;
+  const chips=a=>a.length?`<div class="member-chips">${a.map(m=>`<span class="member-chip">${m}</span>`).join('')}</div>`:'<span style="color:var(--text-dim);font-size:12px;">None listed</span>';
+  const tags=a=>a.length?`<div class="tag-chips">${a.map(t=>`<span class="tag-chip">${t}</span>`).join('')}</div>`:'<span style="color:var(--text-dim);font-size:12px;">None</span>';
+  let h=`<div class="detail-grid">
+    <div class="detail-item"><div class="detail-label">Date</div><div class="detail-value">${fmtDate(r.date)}</div></div>
+    <div class="detail-item"><div class="detail-label">Time of Call</div><div class="detail-value">${r.timeCall||'—'}</div></div>
+    <div class="detail-item"><div class="detail-label">Arrival</div><div class="detail-value">${r.timeArrival||'—'}</div></div>
+    <div class="detail-item"><div class="detail-label">Cleared</div><div class="detail-value">${r.timeClear||'—'}</div></div>
+    
+    <div class="detail-item"><div class="detail-label">Call Type</div><div class="detail-value">${r.callType||'—'}</div></div>
+    <div class="detail-item"><div class="detail-label">Report By</div><div class="detail-value">${r.reportBy||'—'}</div></div>`;
+  if(!isFire)h+=`<div class="detail-item detail-full"><div class="detail-label">Chief Complaint</div><div class="detail-value">${r.chiefComplaint||'—'}</div></div><div class="detail-item detail-full"><div class="detail-label">EMS Service</div><div class="detail-value">${r.emsService||'—'}</div></div>`;
+  else{if(r.propertyLoss)h+=`<div class="detail-item"><div class="detail-label">Property Loss</div><div class="detail-value">$${r.propertyLoss}</div></div>`;if(r.acres)h+=`<div class="detail-item"><div class="detail-label">Acres</div><div class="detail-value">${r.acres}</div></div>`;}
+  h+=`</div>`;
+  h+=sec('Members Responding',chips(r.membersResponding||[]));
+  if(isFire&&(r.trucksUsed||[]).length)h+=sec('Apparatus Used',tags(r.trucksUsed));
+  if((r.atStation||[]).length)h+=sec('At Station',chips(r.atStation));
+  if(isFire&&(r.equipmentGeneral||[]).length)h+=sec('General Equipment',tags(r.equipmentGeneral));
+  if(isFire&&(r.equipmentRescue||[]).length)h+=sec('Rescue Equipment',tags(r.equipmentRescue));
+    document.getElementById('modalBody').innerHTML=h;
+  document.getElementById('runModal').classList.add('visible');
+}
+function closeModal(){document.getElementById('runModal').classList.remove('visible');}
 
 // ═══════════════════════════════════════════════
 // ROSTER
@@ -2910,7 +2942,7 @@ function initHydrantMap(){
   _hydMapDone=true;
   injectLeafletPopupStyle();
 
-  const map=L.map('hydrantMapContainer',{center:[36.9575,-94.8450],zoom:13});
+  const map=L.map('hydrantMapContainer',{center:[36.9575,-94.8450],zoom:14});
   L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{
     attribution:'&copy; <a href="https://carto.com/">CARTO</a>',subdomains:'abcd',maxZoom:20
   }).addTo(map);
@@ -2983,31 +3015,32 @@ function openHydTestFor(label){
 }
 
 // ═══════════════════════════════════════════════
-// INLINE TRUCK CHECK MODULE — Peoria FD
+// JOTFORM STUBS — not yet configured
 // ═══════════════════════════════════════════════
+function load2026MissedCalls(){ return; }
+function ensureRunsLoaded(){ return; }
+function updateHomeStats(){ return; }
+function compute2026MemberStats(){ return; }
 
-// ═══════════════════════════════════════════════
-// EMAILJS — Apparatus Check Reports (Peoria FD)
-// ═══════════════════════════════════════════════
-const TC_EMAILJS_PUBLIC_KEY  = 'ycLQ57A_3TaYrVXel';
-const TC_EMAILJS_SERVICE_ID  = 'service_1t5c2es';
-const TC_EMAILJS_TEMPLATE_ID = 'template_z853n2o';
-const TC_REPORT_EMAIL = 'jason.garrison@quapawfire.com';
-if(typeof emailjs !== 'undefined') emailjs.init({ publicKey: TC_EMAILJS_PUBLIC_KEY });
+</script>
 
+<script>
+// ═══════════════════════════════════════════════
+// TRUCK CHECK MODULE — Peoria FD
+// ═══════════════════════════════════════════════
 
 // ════════════════════════════════════════════════════
 // UNITS
 // ════════════════════════════════════════════════════
 const UNITS = [
-  {id:'brush42',  name:'Brush 42',         type:'brush',     icon:'🌲'},
-  {id:'brush43',  name:'Brush 43',         type:'brush',     icon:'🌲'},
-  {id:'tank45',   name:'Tanker 45',        type:'tanker',    icon:'🚛'},
-  {id:'brushtank461', name:'Brush Tanker 46.1', type:'brush', icon:'🌲'},
-  {id:'brushtank462', name:'Brush Tanker 46.2', type:'brush', icon:'🌲'},
-  {id:'brush47',  name:'Brush 47',         type:'brush',     icon:'🌲'},
-  {id:'res48',    name:'Rescue 48',        type:'rescue',    icon:'🔧'},
-  {id:'eng49',    name:'Engine 49',        type:'engine',    icon:'🚒'},
+  {id:'brush42',      name:'Brush 42',         type:'brush',  icon:'🌲'},
+  {id:'brush43',      name:'Brush 43',         type:'brush',  icon:'🌲'},
+  {id:'tank45',       name:'Tanker 45',        type:'tanker', icon:'🚛'},
+  {id:'brushtank461', name:'Brush Tanker 46.1',type:'brush',  icon:'🌲'},
+  {id:'brushtank462', name:'Brush Tanker 46.2',type:'brush',  icon:'🌲'},
+  {id:'brush47',      name:'Brush 47',         type:'brush',  icon:'🌲'},
+  {id:'res48',        name:'Rescue 48',        type:'rescue', icon:'🔧'},
+  {id:'eng49',        name:'Engine 49',        type:'engine', icon:'🚒'},
 ];
 
 // ════════════════════════════════════════════════════
@@ -3517,7 +3550,7 @@ async function submitCheck() {
   document.getElementById('loadingOverlay').classList.add('visible');
   const subj=`[QFD Check] ${u.name} — ${S.info.date} — ${defs.length>0?'⚠ '+defs.length+' DEFICIENCY':corrs.length>0?'✓ CLEAR / '+corrs.length+' CORRECTED':'✓ ALL CLEAR'}`;
   try {
-    await emailjs.send(TC_EMAILJS_SERVICE_ID, TC_EMAILJS_TEMPLATE_ID, {subject:subj, to_email: TC_REPORT_EMAIL, report:r});
+    await emailjs.send('service_1t5c2es', 'template_z853n2o', {subject:subj, to_email:'jason.garrison@quapawfire.com', report:r});
     document.getElementById('loadingOverlay').classList.remove('visible');
     toast('✓ Report sent','success');
     setTimeout(resetApp,2000);
@@ -3541,8 +3574,8 @@ let _historyCache = []; // used by viewDetail
 async function saveToHistory(p) {
   // Always save to localStorage as offline backup
   try {
-    const local = JSON.parse(localStorage.getItem('pfd_history')||'[]');
-    local.unshift(p); localStorage.setItem('pfd_history', JSON.stringify(local.slice(0,50)));
+    const local = JSON.parse(localStorage.getItem('qfd_history')||'[]');
+    local.unshift(p); localStorage.setItem('qfd_history', JSON.stringify(local.slice(0,50)));
   } catch(e) {}
   // Save to Supabase for shared visibility
   const { error } = await db.from('apparatus_checks').insert([{
@@ -3577,7 +3610,7 @@ async function renderHistory() {
 
   if (error) {
     // Fall back to localStorage if Supabase unreachable
-    const local = JSON.parse(localStorage.getItem('pfd_history')||'[]');
+    const local = JSON.parse(localStorage.getItem('qfd_history')||'[]');
     _historyCache = local;
     renderHistoryTable(local, true);
     return;
@@ -3682,708 +3715,6 @@ function toast(msg, type='success') {
 // INIT
 // ════════════════════════════════════════════════════
 renderStep();
-
-
-
-
-// ═══════════════════════════════════════════════
-// EMAILJS — Apparatus Check Reports (Peoria FD)
-// ═══════════════════════════════════════════════
-const TC_EMAILJS_PUBLIC_KEY  = 'ycLQ57A_3TaYrVXel';
-const TC_EMAILJS_SERVICE_ID  = 'service_1t5c2es';
-const TC_EMAILJS_TEMPLATE_ID = 'template_z853n2o';
-const TC_REPORT_EMAIL = 'jason.garrison@quapawfire.com';
-if(typeof emailjs !== 'undefined') emailjs.init({ publicKey: TC_EMAILJS_PUBLIC_KEY });
-
-
-// ════════════════════════════════════════════════════
-// UNITS
-// ════════════════════════════════════════════════════
-const UNITS = [
-  {id:'brush42',  name:'Brush 42',         type:'brush',     icon:'🌲'},
-  {id:'brush43',  name:'Brush 43',         type:'brush',     icon:'🌲'},
-  {id:'tank45',   name:'Tanker 45',        type:'tanker',    icon:'🚛'},
-  {id:'brushtank461', name:'Brush Tanker 46.1', type:'brush', icon:'🌲'},
-  {id:'brushtank462', name:'Brush Tanker 46.2', type:'brush', icon:'🌲'},
-  {id:'brush47',  name:'Brush 47',         type:'brush',     icon:'🌲'},
-  {id:'res48',    name:'Rescue 48',        type:'rescue',    icon:'🔧'},
-  {id:'eng49',    name:'Engine 49',        type:'engine',    icon:'🚒'},
-];
-
-// ════════════════════════════════════════════════════
-// CHECKLISTS
-// ════════════════════════════════════════════════════
-const CHECKLISTS = {
-  engine:[
-    {title:'Cab & Driver Area',items:['Fuel level — 3/4 tank minimum','Engine oil — within normal range','Coolant level — within normal range','Transmission fluid — within normal range','Power steering fluid — within normal range','Brake fluid — within normal range','Air brake pressure builds to operating range','Parking brake functional','Windshield clean and unobstructed','Windshield wipers and washers operational','Horn functional','Seatbelts present and functional — all positions','No dashboard warning or fault lights active','Mirrors properly adjusted','Radio on correct channel and operational','MDT / CAD terminal operational (if equipped)']},
-    {title:'Exterior & Lighting',items:['Headlights — low beam operational','Headlights — high beam operational','Taillights operational','Brake lights operational','Turn signals — all four corners operational','Emergency warning lights — all zones operational','Scene / work lights operational','Step / ground lights operational','Reverse lights and backup alarm functional','All tires properly inflated and free of damage','No visible fluid leaks under apparatus','All compartment doors close and latch securely','Handrails and steps secure and undamaged','Chassis and body free of significant damage','Ground ladders properly mounted and secured']},
-    {title:'Engine Compartment',items:['No evidence of fluid leaks in compartment','Drive belts in good condition — no cracking or fraying','All hoses in good condition — no bulging or leaks','Air filter restriction indicator in green zone','Engine starts and runs smoothly','No unusual noises at idle','Battery terminals secure and free of corrosion','Alternator / charging system operational']},
-    {title:'Pump & Water System',items:['Booster tank full (at required operating level)','Pump primer oil level adequate','Tank-to-pump valve opens and closes properly','All discharge valves operational and capped','All intake valves operational and capped','Steamer / LDH intake cap secure','Pump panel gauges functional and zeroed','Pump panel lights operational','Pump shift engages and disengages properly','Relief / governor valve operational','All drain valves operational','Booster reel charged and hose in good condition (if equipped)','Foam tank level adequate (if equipped)','Foam proportioner system operational (if equipped)']},
-    {title:'Hose Load & Nozzles',items:['Pre-connect attack lines — loaded correctly and secured','Supply hose — correct quantity loaded and in good condition','Attack hose — correct quantity and in good condition','All nozzles present, accounted for, and functional','Nozzle gaskets in good condition','Hose appliances present — wye, siamese, reducers','Hose straps and bands secure','Smooth-bore tips present and accounted for (if equipped)']},
-    {title:'Ground Ladders',items:['Extension ladder present and free of damage','Roof ladder present and free of damage','Attic / folding ladder present and secure (if equipped)','All ladder mounts and restraints secure','Ladder rungs free of bends, cracks, or corrosion','Halyard rope in good condition — no fraying','Roof hooks functional and secure']},
-    {title:'SCBA & Breathing Equipment',items:['All SCBA units present and accounted for','All SCBA cylinders at full pressure (4500 PSI or rated capacity)','SCBA harnesses and straps in good condition','SCBA face pieces — lenses clear, seals undamaged','PASS devices functional and armed','Spare SCBA cylinders — correct quantity present','All cylinders within hydrostatic test date']},
-    {title:'Hand Tools & Equipment',items:['Irons (halligan & flat-head axe) present and secured','Pickhead axe present and secured','Pike poles / hooks present','Salvage covers present and in good condition','Portable handlights — charged and operational','Scene / tripod lights present and operational','Thermal imaging camera (TIC) charged and operational','EMS / first aid kit complete and in-date']},
-    {title:'PPE & Safety Equipment',items:['Structural PPE (turnout gear) — all sets present and serviceable','Helmets present and undamaged','Gloves — adequate supply','Traffic / safety vests present','Wheel chocks present (minimum 2)','Road flares / traffic cones present']}
-  ],
-  tanker:[
-    {title:'Cab & Driver Area',items:['Fuel level — 3/4 tank minimum','Engine oil — within normal range','Coolant level — within normal range','Transmission fluid — within normal range','Air brake pressure builds to operating range','Parking brake functional','Windshield clean and unobstructed','Windshield wipers and washers operational','Horn functional','Seatbelts present and functional — all positions','No dashboard warning or fault lights active','Mirrors properly adjusted','Radio on correct channel and operational']},
-    {title:'Exterior & Lighting',items:['Headlights — low and high beam operational','Taillights and brake lights operational','Turn signals — all four corners operational','Emergency warning lights — all zones operational','Scene / work lights operational','Reverse lights and backup alarm functional','All tires properly inflated and free of damage','No visible fluid leaks under apparatus','All compartment doors close and latch securely','Handrails and steps secure','Chassis and body free of significant damage','Tank vents unobstructed and functional']},
-    {title:'Engine Compartment',items:['No evidence of fluid leaks in compartment','All drive belts and hoses in good condition','Engine starts and runs smoothly','No unusual noises at idle','Battery terminals secure and free of corrosion','Alternator / charging system operational']},
-    {title:'Tank & Fill System',items:['Main tank full (rated capacity)','Tank structural integrity — no visible cracks or leaks','Tank-to-fill valve functional','Top fill valve opens and closes properly','Direct tank fill connection capped and secure','Tank vent pipe clear and unobstructed','Overflow pipe clear and unobstructed','Tank sight gauge / level indicator functional','Quick-fill / nurse tender system operational (if equipped)','Hard suction hose present and in good condition']},
-    {title:'Dump Valves & Portable Equipment',items:['Main dump valve(s) open and close properly','Dump chute deploys and stows properly','Rear dump valve capped and secure','Side dump valve(s) capped and secure (if equipped)','Portable folding tank(s) present and in good condition','Portable tank carry straps / tote present','Low-head dump suction strainer present','Porta-pond / jet siphon present (if equipped)']},
-    {title:'Pump & Discharge System',items:['Transfer / auxiliary pump operational (if equipped)','Pump discharge valves operational and capped','Pump panel gauges functional','Pump engages and disengages properly','Hose — correct quantity and in good condition','Nozzles / appliances present and functional']},
-    {title:'PPE & Safety Equipment',items:['Structural PPE — all sets present and serviceable','Traffic / safety vests present','Wheel chocks present (minimum 2)','Road flares / traffic cones present','EMS / first aid kit present']}
-  ],
-  brush:[
-    {title:'Cab & Driver Area',items:['Fuel level — 3/4 tank minimum','Engine oil — within normal range','Coolant level — within normal range','Transmission fluid — within normal range','4WD system operational and all modes engage','Parking brake functional','Windshield clean and unobstructed','Windshield wipers operational','Horn functional','Seatbelts present and functional — all positions','No dashboard warning or fault lights active','Mirrors properly adjusted','Radio on correct channel and operational']},
-    {title:'Exterior & Lighting',items:['Headlights — low and high beam operational','Taillights and brake lights operational','Turn signals — all four corners operational','Emergency warning lights operational','Scene / work lights operational','Reverse lights and backup alarm functional','All tires — properly inflated, adequate tread, no damage','No visible fluid leaks under apparatus','Underbody skid plates / brush guards secure (if equipped)','All compartment doors latch securely']},
-    {title:'Engine & Drivetrain',items:['Engine starts and runs smoothly','No unusual noises at idle or under load','All belts and hoses in good condition','Battery terminals secure and free of corrosion','Exhaust system secure and free of leaks','Locking differentials operational (if equipped)','PTO operational (if equipped)','Winch operational and cable in good condition (if equipped)']},
-    {title:'Water System',items:['Booster tank full','Pump prime functional','Pump engages and disengages properly','All discharge valves operational and capped','Booster reel charged and hose in good condition','Nozzle(s) present and functional','All drain valves operational','Foam system operational (if equipped)']},
-    {title:'Wildland Hand Tools',items:['Pulaski(s) present and secured','McLeod(s) / Council rake(s) present and secured','Shovel(s) present and secured','Hand saw(s) present and secured','Chainsaw present, fueled and operational (if equipped)','Drip torch present and fueled (if equipped)','Bladder bag(s) present and operational','Flagging tape and marking materials present','Backpack pump(s) present (if equipped)']},
-    {title:'Communications & Navigation',items:['Portable radios — charged and on correct channel','Radio charger / spare battery present','Map / compass / GPS device present','Area road map current and present']},
-    {title:'PPE & Safety Equipment',items:['Wildland PPE (Nomex shirt and pants) — all sets present and serviceable','Wildland helmets present','Fire shelters — one per person, properly packed, in-date','Leather gloves — adequate supply','Eye protection present','EMS / first aid kit complete and in-date','Traffic / safety vests present','Wheel chocks present']}
-  ],
-  rescue:[
-    {title:'Cab & Driver Area',items:['Fuel level — 3/4 tank minimum','Engine oil — within normal range','Coolant level — within normal range','Transmission fluid — within normal range','Parking brake functional','Windshield clean and unobstructed','Windshield wipers operational','Horn functional','Seatbelts present and functional — all positions','No dashboard warning or fault lights active','Mirrors properly adjusted','Radio on correct channel and operational','MDT / CAD terminal operational (if equipped)']},
-    {title:'Exterior & Lighting',items:['Headlights — low and high beam operational','Taillights and brake lights operational','Turn signals — all four corners operational','Emergency warning lights — all zones operational','Scene / work lights — all sides operational','Floodlights / telescoping lights operational (if equipped)','Reverse lights and backup alarm functional','All tires properly inflated and free of damage','No visible fluid leaks','All compartment doors close and latch securely','Handrails and steps secure']},
-    {title:'Generator & Electrical',items:['Generator starts and runs properly','Generator fuel level adequate','Generator output voltage within spec','Generator circuit breakers functional','All outlet receptacles functional and weatherproofed','Power cables — 100 ft minimum, in good condition','Junction / distribution box functional']},
-    {title:'Rescue & Extrication Equipment',items:['Hydraulic spreader — fluid level adequate and operational','Hydraulic cutters operational','Hydraulic ram(s) operational','High-lift jack present and functional','Rescue straps / chains present and in good condition','Cribbing — adequate supply and in good condition','Come-along / manual winch present','Reciprocating saw with rescue blades operational','Lifting air bags — all present and functional (if equipped)','Stabilization struts present and functional (if equipped)']},
-    {title:'Medical Equipment',items:['AED — fully charged, pads in-date','Oxygen — cylinder pressure adequate, regulator functional','Stretcher / backboards present and in good condition','Cervical collars — full range of sizes present','Trauma bags — stocked and in-date','Airway management kit complete','Bleeding control kits (tourniquets, packing gauze) present','Cold weather / hypothermia blankets present']},
-    {title:'Hand & Power Tools',items:['Reciprocating saw operational and blades stocked','Circular saw operational — masonry and metal blades present','Chain saw present, fueled and operational (if equipped)','Drill / driver operational and batteries charged','Pry bars — full set present','Bolt cutters present']},
-    {title:'Lighting & Scene Equipment',items:['Portable LED handlights — all charged and operational','Scene tripod lights operational','Power extension cords present','Traffic cones / road flares — adequate supply','Traffic / safety vests present','Wheel chocks present (minimum 2)']}
-  ],
-  medrescue:[
-    {title:'Cab & Driver Area',items:['Fuel level — 3/4 tank minimum','Engine oil — within normal range','Coolant level — within normal range','Transmission fluid — within normal range','Parking brake functional','Windshield clean and unobstructed','Windshield wipers operational','Horn functional','Seatbelts present and functional — all positions','No dashboard warning or fault lights active','Mirrors properly adjusted','Radio on correct channel and operational','MDT / CAD terminal operational (if equipped)']},
-    {title:'Exterior & Lighting',items:['Headlights — low and high beam operational','Taillights and brake lights operational','Turn signals — all four corners operational','Emergency warning lights — all zones operational','Scene / work lights — all sides operational','Reverse lights and backup alarm functional','All tires properly inflated and free of damage','No visible fluid leaks','All compartment doors close and latch securely','Handrails and steps secure']},
-    {title:'Generator & Electrical',items:['Generator starts and runs properly','Generator fuel level adequate','Generator output voltage within spec','All outlet receptacles functional','Power cables — 100 ft minimum, in good condition']},
-    {title:'Rescue & Extrication Equipment',items:['Hydraulic spreader operational','Hydraulic cutters operational','Hydraulic ram(s) operational','High-lift jack present and functional','Rescue straps / chains present and in good condition','Cribbing — adequate supply and in good condition','Come-along / manual winch present','Reciprocating saw with rescue blades operational']},
-    {title:'Medical Equipment',items:['AED — fully charged, pads in-date','Oxygen — cylinder pressure adequate, regulator functional','Stretcher / backboards present and in good condition','Cervical collars — full range of sizes present','Trauma bags — stocked and in-date','Airway management kit complete','Bleeding control kits (tourniquets, packing gauze) present']},
-    {title:'SCBA Cascade / Refill Station',items:['Cascade cylinders — all charged to operating pressure','Cascade manifold — no leaks detected','Cylinder isolation valves open and close properly','Fill panel gauges accurate and functional','Fill whips in good condition — no cracking or damage','Cylinder mounts / rack secure — no movement','All cascade cylinders within hydrostatic test date','Carbon monoxide monitor / alarm operational and in-date','Spare SCBA cylinders — correct quantity present and fully charged','All spare cylinders within hydrostatic test date','Cylinder inventory log current and signed','Low-pressure / depleted cylinders segregated for refill','Spare valve O-rings available']},
-    {title:'SCBA Units & Masks',items:['All SCBA units present and accounted for','SCBA harnesses and frames — no visible damage','Face pieces — lenses clear, seals undamaged','Face piece straps in good condition — no cracking','PASS devices functional and armed','All units within required flow-test period']},
-    {title:'Hand Tools & Lighting',items:['Pry bars — full set present','Bolt cutters present','Drill / driver operational and batteries charged','Portable LED handlights — all charged and operational','Scene tripod lights operational','Power extension cords present','Traffic cones / road flares — adequate supply','Traffic / safety vests present','Wheel chocks present (minimum 2)']}
-  ]
-};
-
-// ════════════════════════════════════════════════════
-// STATE
-// ════════════════════════════════════════════════════
-let S = {step:1, unitId:null, info:{date:'',time:'',performer:'',mileage:'',notes:''}, items:{}};
-const getUnit = () => UNITS.find(u => u.id === S.unitId);
-const getCL   = () => { const u = getUnit(); return u ? CHECKLISTS[u.type] : []; };
-
-const TYPE_LABEL = {engine:'Engine / Pumper',tanker:'Tanker / Tender',brush:'Brush / Wildland',rescue:'Heavy Rescue',medrescue:'Medium Rescue + SCBA Cascade'};
-
-// ════════════════════════════════════════════════════
-// VIEW SWITCH
-// ════════════════════════════════════════════════════
-function tcSwitchView(v, btn) {
-  document.querySelectorAll('.tc-view').forEach(e => e.classList.remove('active'));
-  document.querySelectorAll('[id^="tcNav"]').forEach(e => e.classList.remove('active'));
-  document.getElementById('tc-view-'+v).classList.add('active');
-  if (btn) btn.classList.add('active');
-  if (v==='history') renderHistory();
-}
-
-// ════════════════════════════════════════════════════
-// RENDER STEPS
-// ════════════════════════════════════════════════════
-function renderStep() {
-  updateStepIndicator();
-  const fns = [null, step1, step2, step3, step4];
-  document.getElementById('step-content').innerHTML = fns[S.step]();
-  window.scrollTo(0,0);
-}
-
-function updateStepIndicator() {
-  for (let i=1;i<=4;i++) {
-    const el = document.getElementById('stepEl-'+i);
-    el.className = 'step'+(i<S.step?' done':i===S.step?' active':'');
-    el.querySelector('.step-num').textContent = i<S.step?'✓':i;
-  }
-}
-
-// ── Step 1: Unit ──────────────────────────────────
-function step1() {
-  return `
-    <div class="page-title">Select Unit</div>
-    <div class="page-subtitle">Choose the apparatus you are checking today.</div>
-    <div class="unit-grid">
-      ${UNITS.map(u=>`
-        <div class="unit-card ${S.unitId===u.id?'selected':''}" onclick="pickUnit('${u.id}')">
-          <span class="unit-icon">${u.icon}</span>
-          <div class="unit-name">${u.name}</div>
-          <div class="unit-type">${TYPE_LABEL[u.type]}</div>
-        </div>`).join('')}
-    </div>
-    <div class="nav-buttons">
-      <div></div>
-      <button class="btn btn-primary" onclick="nextStep()" ${!S.unitId?'disabled':''}>Continue → Details</button>
-    </div>`;
-}
-
-function pickUnit(id) {
-  if (S.unitId !== id) { S.unitId=id; S.items={}; }
-  renderStep();
-}
-
-// ── Step 2: Details ───────────────────────────────
-function step2() {
-  const now = new Date();
-  const d = S.info.date || now.toISOString().split('T')[0];
-  const t = S.info.time || now.toTimeString().slice(0,5);
-  const u = getUnit();
-  return `
-    <div class="page-title">Check Details</div>
-    <div class="page-subtitle">Unit: <strong>${u.name}</strong> &nbsp;·&nbsp; ${TYPE_LABEL[u.type]}</div>
-    <div class="section-card"><div style="padding:22px;">
-      <div class="form-grid">
-        <div class="form-group">
-          <label class="form-label">Date <span class="required-mark">*</span></label>
-          <input class="form-input" type="date" id="iDate" value="${d}" oninput="si()">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Time <span class="required-mark">*</span></label>
-          <input class="form-input" type="time" id="iTime" value="${t}" oninput="si()">
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Performed By <span class="required-mark">*</span></label>
-        <input class="form-input" type="text" id="iPerformer" placeholder="Full name" value="${S.info.performer}" oninput="si()">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Odometer / Engine Hours</label>
-        <input class="form-input" type="text" id="iMileage" placeholder="e.g. 12,450 mi or 340 hrs" value="${S.info.mileage}" oninput="si()">
-      </div>
-      <div class="form-group">
-        <label class="form-label">General Notes (Optional)</label>
-        <textarea class="form-input" id="iNotes" placeholder="Any pre-check notes..." style="min-height:72px;resize:vertical;" oninput="si()">${S.info.notes}</textarea>
-      </div>
-    </div></div>
-    <div class="nav-buttons">
-      <button class="btn btn-secondary" onclick="prevStep()">← Back</button>
-      <button class="btn btn-primary" onclick="goChecklist()">Continue → Checklist</button>
-    </div>`;
-}
-
-function si() {
-  const m = {date:'iDate',time:'iTime',performer:'iPerformer',mileage:'iMileage',notes:'iNotes'};
-  Object.entries(m).forEach(([k,id])=>{ const el=document.getElementById(id); if(el) S.info[k]=el.value; });
-}
-
-async function goChecklist() {
-  si();
-  if (!S.info.performer.trim()) { toast('Enter the name of the person performing the check.','error'); return; }
-  // Pre-fill all items as PASS
-  getCL().forEach((sec, si) => {
-    sec.items.forEach((_, ii) => {
-      const key = `${si}-${ii}`;
-      if (!S.items[key]) S.items[key] = {status:'pass', note:'', photos:[], carriedFail:false};
-    });
-  });
-  // Fetch most recent check for this unit — carry forward any FAIL items
-  try {
-    const { data } = await db
-      .from('apparatus_checks')
-      .select('checklist')
-      .eq('unit_id', S.unitId)
-      .order('date', { ascending: false })
-      .order('time', { ascending: false })
-      .limit(1)
-      .single();
-    if (data?.checklist) {
-      data.checklist.forEach((sec, si) => {
-        sec.items?.forEach((item, ii) => {
-          if (item.status === 'fail') {
-            const key = `${si}-${ii}`;
-            S.items[key] = {status:'fail', note:item.note||'', photos:[], carriedFail:true};
-          }
-        });
-      });
-    }
-  } catch(e) { /* no previous check found — fine */ }
-  nextStep();
-}
-
-// ── Step 3: Checklist ─────────────────────────────
-function step3() {
-  const u = getUnit(), cl = getCL(), st = getStats();
-  const pct = st.total ? Math.round(st.checked/st.total*100) : 0;
-  return `
-    <div style="margin-bottom:18px;">
-      <div class="page-title">${u.name}</div>
-      <div style="font-size:13px;color:var(--text-muted);">${TYPE_LABEL[u.type]} · ${S.info.date} · ${S.info.performer}</div>
-    </div>
-    <div class="summary-stats">
-      <div class="stat-card"><div class="stat-value">${st.total}</div><div class="stat-label">Total</div></div>
-      <div class="stat-card pass"><div class="stat-value" id="spPass">${st.passed}</div><div class="stat-label">Pass</div></div>
-      <div class="stat-card fail"><div class="stat-value" id="spFail">${st.failed}</div><div class="stat-label">Fail</div></div>
-      <div class="stat-card corr"><div class="stat-value" id="spCorr">${st.corrected}</div><div class="stat-label">Corr</div></div>
-      <div class="stat-card na"><div class="stat-value" id="spNA">${st.na}</div><div class="stat-label">N/A</div></div>
-    </div>
-    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="pgBar" style="width:${pct}%"></div></div>
-    ${cl.map((sec,si)=>renderSec(sec,si)).join('')}
-    <div class="nav-buttons">
-      <button class="btn btn-secondary" onclick="prevStep()">← Back</button>
-      <button class="btn btn-primary" onclick="goReview()">Review & Submit →</button>
-    </div>`;
-}
-
-function renderSec(sec, si) {
-  const ss = secStats(si);
-  const dot = ss.failed>0?'has-fails':ss.checked===sec.items.length?'complete':ss.checked>0?'partial':'';
-  return `
-    <div class="section-card">
-      <div class="section-header" onclick="togSec(${si})">
-        <div class="section-title"><span class="section-status-dot ${dot}" id="dot-${si}"></span>${sec.title}</div>
-        <div style="display:flex;align-items:center;gap:10px;">
-          <span class="section-progress" id="sp-${si}">${ss.checked}/${sec.items.length}</span>
-          <button class="collapse-btn" id="cb-${si}">▼</button>
-        </div>
-      </div>
-      <div class="section-body" id="sb-${si}">
-        ${sec.items.map((item,ii)=>renderItem(si,ii,item)).join('')}
-      </div>
-    </div>`;
-}
-
-function renderItem(si, ii, item) {
-  const key=`${si}-${ii}`, it=S.items[key]||{status:null,note:'',photos:[]};
-  const cls=it.status==='pass'?' passed':it.status==='fail'?' failed':it.status==='corrected'?' corrected':'';
-  const dv=(it.status==='fail'||it.status==='corrected')?' visible':'';
-  const isCarried = it.carriedFail === true;
-  const notePlaceholder = it.status==='corrected' ? 'Describe what was corrected...' : 'Describe the deficiency...';
-  const photos=(it.photos||[]).map((p,pi)=>`<img class="photo-thumb" src="${p}" title="Click to remove" onclick="rmPhoto('${key}',${pi})">`).join('');
-  return `
-    <div class="checklist-item${cls}" id="ci-${key}">
-      <div class="item-row">
-        <div class="item-text">${item}${isCarried?'<span class="carry-flag">PREV FAIL</span>':''}</div>
-        <div class="status-buttons">
-          <button class="status-btn pass ${it.status==='pass'?'active':''}" onclick="setS('${key}','pass')">PASS</button>
-          <button class="status-btn fail ${it.status==='fail'?'active':''}" onclick="setS('${key}','fail')">FAIL</button>
-          <button class="status-btn corr ${it.status==='corrected'?'active':''}" onclick="setS('${key}','corrected')">CORR</button>
-          <button class="status-btn na ${it.status==='na'?'active':''}" onclick="setS('${key}','na')">N/A</button>
-        </div>
-      </div>
-      <div class="item-deficiency${dv}" id="def-${key}">
-        <textarea class="deficiency-note" placeholder="${notePlaceholder}" rows="2" onchange="saveNote('${key}',this.value)">${it.note||''}</textarea>
-        <div class="photo-upload-area">
-          <label class="photo-btn" for="ph-${key}">📷 Add Photo</label>
-          <input type="file" id="ph-${key}" accept="image/*" style="display:none" onchange="addPhoto('${key}',this)">
-          <div id="pv-${key}">${photos}</div>
-        </div>
-      </div>
-    </div>`;
-}
-
-function togSec(si) {
-  document.getElementById('sb-'+si).classList.toggle('collapsed');
-  document.getElementById('cb-'+si).classList.toggle('collapsed');
-}
-
-function setS(key, status) {
-  if (!S.items[key]) S.items[key]={status:null,note:'',photos:[]};
-  S.items[key].status=status;
-  const el=document.getElementById('ci-'+key);
-  el.className='checklist-item'+(status==='pass'?' passed':status==='fail'?' failed':status==='corrected'?' corrected':'');
-  ['pass','fail','corr','na'].forEach(s=>el.querySelector('.status-btn.'+s)?.classList.toggle('active',
-    (s==='corr'?'corrected':s)===status));
-  const def=document.getElementById('def-'+key);
-  if(def) {
-    def.className='item-deficiency'+((status==='fail'||status==='corrected')?' visible':'');
-    const ta=def.querySelector('textarea');
-    if(ta) ta.placeholder = status==='corrected'?'Describe what was corrected...':'Describe the deficiency...';
-  }
-  refreshStats(); refreshDot(parseInt(key.split('-')[0]));
-}
-
-function saveNote(key,val) { if(!S.items[key]) S.items[key]={status:null,note:'',photos:[]}; S.items[key].note=val; }
-
-function addPhoto(key,input) {
-  const file=input.files[0]; if(!file) return;
-  const r=new FileReader();
-  r.onload=e=>{
-    if(!S.items[key]) S.items[key]={status:null,note:'',photos:[]};
-    if(!S.items[key].photos) S.items[key].photos=[];
-    const idx=S.items[key].photos.length;
-    S.items[key].photos.push(e.target.result);
-    const pv=document.getElementById('pv-'+key);
-    const img=document.createElement('img');
-    img.className='photo-thumb'; img.src=e.target.result; img.title='Click to remove';
-    img.onclick=()=>rmPhoto(key,idx); pv.appendChild(img); input.value='';
-  };
-  r.readAsDataURL(file);
-}
-
-function rmPhoto(key,idx) {
-  if(!S.items[key]?.photos) return;
-  S.items[key].photos.splice(idx,1);
-  const pv=document.getElementById('pv-'+key);
-  if(pv) pv.innerHTML=S.items[key].photos.map((p,pi)=>`<img class="photo-thumb" src="${p}" title="Click to remove" onclick="rmPhoto('${key}',${pi})">`).join('');
-}
-
-function getStats() {
-  const cl=getCL(); let total=0,passed=0,failed=0,corrected=0,na=0;
-  cl.forEach((sec,si)=>sec.items.forEach((_,ii)=>{
-    total++;
-    const s=S.items[`${si}-${ii}`]?.status;
-    if(s==='pass') passed++; else if(s==='fail') failed++; else if(s==='corrected') corrected++; else if(s==='na') na++;
-  }));
-  return {total,passed,failed,corrected,na,checked:passed+failed+corrected+na};
-}
-
-function secStats(si) {
-  const items=getCL()[si]?.items||[]; let checked=0,failed=0,corrected=0;
-  items.forEach((_,ii)=>{
-    const s=S.items[`${si}-${ii}`]?.status;
-    if(s) checked++;
-    if(s==='fail') failed++;
-    if(s==='corrected') corrected++;
-  });
-  return {checked,failed,corrected,total:items.length};
-}
-
-function refreshStats() {
-  const st=getStats(), pct=st.total?Math.round(st.checked/st.total*100):0;
-  const pb=document.getElementById('pgBar'); if(pb) pb.style.width=pct+'%';
-  const ep=document.getElementById('spPass'), ef=document.getElementById('spFail');
-  const ec=document.getElementById('spCorr'), en=document.getElementById('spNA');
-  if(ep) ep.textContent=st.passed; if(ef) ef.textContent=st.failed;
-  if(ec) ec.textContent=st.corrected; if(en) en.textContent=st.na;
-}
-
-function refreshDot(si) {
-  const ss=secStats(si), dot=document.getElementById('dot-'+si), prog=document.getElementById('sp-'+si);
-  if(!dot) return;
-  dot.className='section-status-dot'+(ss.failed>0?' has-fails':(ss.corrected>0&&ss.failed===0&&ss.checked===ss.total)?' partial':ss.checked===ss.total?' complete':ss.checked>0?' partial':'');
-  if(prog) prog.textContent=`${ss.checked}/${ss.total}`;
-}
-
-function goReview() {
-  const st=getStats(), rem=st.total-st.checked;
-  if(rem>0 && !confirm(`${rem} item(s) not yet marked. Submit anyway?`)) return;
-  nextStep();
-}
-
-// ── Step 4: Review ────────────────────────────────
-function step4() {
-  const u=getUnit(), st=getStats(), {failed:defs, corrected:corrs}=getDefs();
-  const hasDefs=defs.length>0, hasCorrs=corrs.length>0;
-  const configured = EMAILJS_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY';
-  return `
-    <div class="page-title">Review & Submit</div>
-    <div class="page-subtitle">Confirm before sending apparatus check report</div>
-    ${!configured?`<div class="config-warn">⚠ EmailJS not configured yet. Check will save to history but email will not send until you add your keys.</div>`:''}
-    <div class="section-card" style="margin-bottom:14px;"><div style="padding:18px 20px;">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:14px;">
-        <div><span style="color:var(--text-muted);font-size:10px;text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:2px;">Unit</span><strong>${u.name}</strong></div>
-        <div><span style="color:var(--text-muted);font-size:10px;text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:2px;">Type</span>${TYPE_LABEL[u.type]}</div>
-        <div><span style="color:var(--text-muted);font-size:10px;text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:2px;">Date / Time</span>${S.info.date} at ${S.info.time}</div>
-        <div><span style="color:var(--text-muted);font-size:10px;text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:2px;">Performed By</span><strong>${S.info.performer}</strong></div>
-        ${S.info.mileage?`<div><span style="color:var(--text-muted);font-size:10px;text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:2px;">Odo / Hours</span>${S.info.mileage}</div>`:''}
-        ${S.info.notes?`<div style="grid-column:1/-1;"><span style="color:var(--text-muted);font-size:10px;text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:2px;">Notes</span>${S.info.notes}</div>`:''}
-      </div>
-    </div></div>
-    <div class="summary-stats">
-      <div class="stat-card"><div class="stat-value">${st.total}</div><div class="stat-label">Total</div></div>
-      <div class="stat-card pass"><div class="stat-value">${st.passed}</div><div class="stat-label">Pass</div></div>
-      <div class="stat-card fail"><div class="stat-value">${st.failed}</div><div class="stat-label">Fail</div></div>
-      <div class="stat-card corr"><div class="stat-value">${st.corrected}</div><div class="stat-label">Corr</div></div>
-      <div class="stat-card na"><div class="stat-value">${st.na}</div><div class="stat-label">N/A</div></div>
-    </div>
-    <div class="status-banner ${hasDefs?'has-deficiencies':'all-clear'}">
-      ${hasDefs
-        ? `⚠ ${defs.length} outstanding deficiency(ies) — require follow-up.`
-        : hasCorrs
-          ? `✓ No outstanding deficiencies — ${corrs.length} item(s) corrected during this check.`
-          : `✓ All checked items passed — ${u.name} is good to go.`}
-    </div>
-    ${hasDefs?`
-      <div style="margin-bottom:20px;">
-        <div style="font-family:'Oswald',sans-serif;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:#f87171;margin-bottom:8px;">Outstanding Deficiencies</div>
-        ${defs.map(d=>`
-          <div class="deficiency-entry">
-            <div class="deficiency-section">${d.section}</div>
-            <div class="deficiency-item-name">${d.item}</div>
-            ${d.note?`<div class="deficiency-item-note">${d.note}</div>`:''}
-            ${d.photos?.length?`<div style="margin-top:6px;display:flex;gap:4px;">${d.photos.map(p=>`<img src="${p}" style="width:42px;height:42px;object-fit:cover;border-radius:3px;border:1px solid var(--border);">`).join('')}</div>`:''}
-          </div>`).join('')}
-      </div>` : ''}
-    ${hasCorrs?`
-      <div style="margin-bottom:20px;">
-        <div style="font-family:'Oswald',sans-serif;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:var(--amber);margin-bottom:8px;">Corrected During This Check</div>
-        ${corrs.map(d=>`
-          <div style="background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.3);border-radius:var(--radius);padding:11px 15px;margin-bottom:8px;">
-            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--amber);margin-bottom:2px;">${d.section}</div>
-            <div style="font-size:14px;color:var(--text);">${d.item}</div>
-            ${d.note?`<div style="font-size:12px;color:var(--text-muted);margin-top:3px;font-style:italic;">${d.note}</div>`:''}
-          </div>`).join('')}
-      </div>` : ''}
-    <div class="nav-buttons">
-      <button class="btn btn-secondary" onclick="prevStep()">← Back</button>
-      <button class="btn btn-success" onclick="submitCheck()">✓ Submit Report</button>
-    </div>`;
-}
-
-function getDefs() {
-  const cl=getCL(), failed=[], corrected=[];
-  cl.forEach((sec,si)=>sec.items.forEach((item,ii)=>{
-    const key=`${si}-${ii}`, it=S.items[key];
-    if(it?.status==='fail')      failed.push({section:sec.title,item,note:it.note||'',photos:it.photos||[]});
-    if(it?.status==='corrected') corrected.push({section:sec.title,item,note:it.note||'',photos:it.photos||[]});
-  }));
-  return {failed, corrected};
-}
-
-// ════════════════════════════════════════════════════
-// NAV
-// ════════════════════════════════════════════════════
-function nextStep() { if(S.step<4){S.step++;renderStep();} }
-function prevStep() { if(S.step>1){S.step--;renderStep();} }
-
-// ════════════════════════════════════════════════════
-// SUBMIT
-// ════════════════════════════════════════════════════
-async function submitCheck() {
-  const u=getUnit(), st=getStats(), {failed:defs, corrected:corrs}=getDefs(), cl=getCL();
-
-  const line = s => s+'\n';
-  const ruler = c => c.repeat(52)+'\n';
-  let r='';
-  r+=line('QUAPAW FIRE DEPARTMENT');
-  r+=line('APPARATUS CHECK REPORT');
-  r+=ruler('═');
-  r+=line(`Unit:         ${u.name}`);
-  r+=line(`Type:         ${TYPE_LABEL[u.type]}`);
-  r+=line(`Date / Time:  ${S.info.date} at ${S.info.time}`);
-  r+=line(`Performed By: ${S.info.performer}`);
-  if(S.info.mileage) r+=line(`Odo / Hours:  ${S.info.mileage}`);
-  if(S.info.notes)   r+=line(`Notes:        ${S.info.notes}`);
-  r+='\n';
-  r+=line(`RESULTS: ${st.passed} PASS  |  ${st.failed} FAIL  |  ${st.corrected} CORR  |  ${st.na} N/A`);
-  r+=defs.length>0 ? line(`STATUS:  ⚠ ${defs.length} OUTSTANDING DEFICIENCY(IES) — FOLLOW-UP REQUIRED`) : line('STATUS:  ✓ ALL CLEAR');
-  if(defs.length>0) {
-    r+='\n'+ruler('─');
-    r+=line('OUTSTANDING DEFICIENCIES');
-    r+=ruler('─');
-    defs.forEach((d,i)=>{
-      r+=line(`\n${i+1}. [${d.section}]`);
-      r+=line(`   ${d.item}`);
-      if(d.note) r+=line(`   Note: ${d.note}`);
-      if(d.photos?.length) r+=line(`   Photos: ${d.photos.length} attached`);
-    });
-  }
-  if(corrs.length>0) {
-    r+='\n'+ruler('─');
-    r+=line('CORRECTED DURING THIS CHECK');
-    r+=ruler('─');
-    corrs.forEach((d,i)=>{
-      r+=line(`\n${i+1}. [${d.section}]`);
-      r+=line(`   ${d.item}`);
-      if(d.note) r+=line(`   Correction: ${d.note}`);
-    });
-  }
-  r+='\n'+ruler('─');
-  r+=line('FULL CHECKLIST');
-  r+=ruler('─');
-  cl.forEach((sec,si)=>{
-    r+='\n'+line(sec.title.toUpperCase());
-    sec.items.forEach((item,ii)=>{
-      const key=`${si}-${ii}`, s=(S.items[key]?.status||'unchecked').toUpperCase().padEnd(9);
-      r+=line(`  [${s}] ${item}`);
-      if(S.items[key]?.note) r+=line(`             → ${S.items[key].note}`);
-    });
-  });
-  r+='\n'+ruler('═');
-  r+=line('Generated by QFD Apparatus Check System — quapawfire.com');
-
-  const payload={
-    id:Date.now().toString(), timestamp:new Date().toISOString(),
-    unit_id:S.unitId, unit_name:u.name, unit_type:u.type,
-    date:S.info.date, time:S.info.time, performer:S.info.performer,
-    mileage:S.info.mileage, notes:S.info.notes, stats:st,
-    deficiencies:[...defs, ...corrs.map(c=>({...c, corrected:true}))],
-    checklist:cl.map((sec,si)=>({title:sec.title,items:sec.items.map((item,ii)=>{
-      const key=`${si}-${ii}`;
-      return {item,status:S.items[key]?.status||'unchecked',note:S.items[key]?.note||'',photos:S.items[key]?.photos||[]};
-    })}))
-  };
-  await saveToHistory(payload);
-
-  if(EMAILJS_PUBLIC_KEY==='YOUR_PUBLIC_KEY') {
-    toast('Saved to history. Add EmailJS keys to enable email.','error');
-    setTimeout(resetApp,2200); return;
-  }
-
-  document.getElementById('loadingOverlay').classList.add('visible');
-  const subj=`[QFD Check] ${u.name} — ${S.info.date} — ${defs.length>0?'⚠ '+defs.length+' DEFICIENCY':corrs.length>0?'✓ CLEAR / '+corrs.length+' CORRECTED':'✓ ALL CLEAR'}`;
-  try {
-    await emailjs.send(TC_EMAILJS_SERVICE_ID, TC_EMAILJS_TEMPLATE_ID, {subject:subj, to_email: TC_REPORT_EMAIL, report:r});
-    document.getElementById('loadingOverlay').classList.remove('visible');
-    toast('✓ Report sent','success');
-    setTimeout(resetApp,2000);
-  } catch(err) {
-    document.getElementById('loadingOverlay').classList.remove('visible');
-    toast('Email failed: '+(err?.text||err?.message||'Unknown error')+' — Check saved to history.','error');
-    setTimeout(resetApp,3000);
-  }
-}
-
-function resetApp() {
-  S={step:1,unitId:null,info:{date:'',time:'',performer:'',mileage:'',notes:''},items:{}};
-  renderStep();
-}
-
-// ════════════════════════════════════════════════════
-// HISTORY — shared via Supabase
-// ════════════════════════════════════════════════════
-let _historyCache = []; // used by viewDetail
-
-async function saveToHistory(p) {
-  // Always save to localStorage as offline backup
-  try {
-    const local = JSON.parse(localStorage.getItem('pfd_history')||'[]');
-    local.unshift(p); localStorage.setItem('pfd_history', JSON.stringify(local.slice(0,50)));
-  } catch(e) {}
-  // Save to Supabase for shared visibility
-  const { error } = await db.from('apparatus_checks').insert([{
-    id:           p.id,
-    unit_id:      p.unit_id,
-    unit_name:    p.unit_name,
-    unit_type:    p.unit_type,
-    date:         p.date,
-    time:         p.time,
-    performer:    p.performer,
-    mileage:      p.mileage || '',
-    notes:        p.notes   || '',
-    stats:        p.stats,
-    deficiencies: p.deficiencies,
-    checklist:    p.checklist
-  }]);
-  if (error) console.warn('Supabase save error:', error.message);
-}
-
-async function renderHistory() {
-  const c = document.getElementById('historyContent');
-  c.innerHTML = `<div style="text-align:center;padding:48px;color:var(--text-muted);">
-    <div class="spinner" style="margin:0 auto 14px;"></div>Loading shared history...
-  </div>`;
-
-  const { data, error } = await db
-    .from('apparatus_checks')
-    .select('id,unit_name,unit_type,date,time,performer,mileage,stats,deficiencies,notes')
-    .order('date', { ascending: false })
-    .order('time', { ascending: false })
-    .limit(200);
-
-  if (error) {
-    // Fall back to localStorage if Supabase unreachable
-    const local = JSON.parse(localStorage.getItem('pfd_history')||'[]');
-    _historyCache = local;
-    renderHistoryTable(local, true);
-    return;
-  }
-
-  _historyCache = data || [];
-  renderHistoryTable(_historyCache, false);
-}
-
-function renderHistoryTable(h, isOffline) {
-  const c = document.getElementById('historyContent');
-  if (!h.length) {
-    c.innerHTML = `<div class="empty-state"><div style="font-size:48px;margin-bottom:14px;">📋</div>
-      <div style="font-family:'Oswald',sans-serif;font-size:20px;font-weight:600;text-transform:uppercase;margin-bottom:6px;">No Check History</div>
-      <p style="font-size:14px;">Completed checks appear here.</p></div>`;
-    return;
-  }
-  const offlineBanner = isOffline
-    ? `<div style="background:rgba(245,158,11,.1);border:1px solid var(--amber);border-radius:var(--radius);padding:9px 14px;font-size:13px;color:var(--amber);margin-bottom:12px;">⚠ Showing device-local history — could not reach shared database.</div>`
-    : '';
-  c.innerHTML = offlineBanner + `
-    <div class="section-card">
-      <table class="history-table">
-        <thead><tr><th>Date</th><th>Unit</th><th>Performed By</th><th>Result</th><th></th></tr></thead>
-        <tbody>${h.map(x => `
-          <tr>
-            <td style="font-family:'JetBrains Mono',monospace;font-size:12px;">${x.date}<br><span style="color:var(--text-muted)">${x.time}</span></td>
-            <td><strong>${x.unit_name||x.unitName}</strong><br><span style="font-size:11px;color:var(--text-muted);">${TYPE_LABEL[x.unit_type||x.type]||''}</span></td>
-            <td>${x.performer}</td>
-            <td>${x.stats?.failed>0
-              ? `<span class="badge badge-fail">⚠ ${x.stats.failed} FAIL</span>`
-              : x.stats?.corrected>0
-                ? `<span class="badge" style="background:rgba(245,158,11,.2);color:var(--amber);">✓ ${x.stats.corrected} CORR</span>`
-                : `<span class="badge badge-pass">✓ CLEAR</span>`}</td>
-            <td><button class="link-btn" onclick="viewDetail('${x.id}')">View</button></td>
-          </tr>`).join('')}
-        </tbody>
-      </table>
-    </div>`;
-}
-
-async function viewDetail(id) {
-  // Try cache first, then fetch full record from Supabase if needed
-  let h = _historyCache.find(x => x.id === id);
-  if (!h || !h.checklist) {
-    const { data } = await db.from('apparatus_checks').select('*').eq('id', id).single();
-    if (data) h = data;
-  }
-  if (!h) return;
-
-  const defs = h.deficiencies || [];
-  const unitName = h.unit_name || h.unitName || '';
-  document.getElementById('tcModalTitle').textContent = `${unitName} — ${h.date}`;
-  document.getElementById('tcModalBody').innerHTML = `
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px;font-size:14px;">
-      <div><span style="color:var(--text-muted);font-size:10px;text-transform:uppercase;letter-spacing:1px;display:block;">Unit</span><strong>${unitName}</strong></div>
-      <div><span style="color:var(--text-muted);font-size:10px;text-transform:uppercase;letter-spacing:1px;display:block;">Performed By</span>${h.performer}</div>
-      <div><span style="color:var(--text-muted);font-size:10px;text-transform:uppercase;letter-spacing:1px;display:block;">Date / Time</span>${h.date} at ${h.time}</div>
-      ${h.mileage?`<div><span style="color:var(--text-muted);font-size:10px;text-transform:uppercase;letter-spacing:1px;display:block;">Odo / Hours</span>${h.mileage}</div>`:''}
-      ${h.notes?`<div style="grid-column:1/-1;"><span style="color:var(--text-muted);font-size:10px;text-transform:uppercase;letter-spacing:1px;display:block;">Notes</span>${h.notes}</div>`:''}
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:18px;">
-      ${['total','passed','failed','corrected','na'].map(k=>`
-        <div style="background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:10px;text-align:center;">
-          <div style="font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:600;color:${k==='passed'?'#4ade80':k==='failed'?'#f87171':k==='corrected'?'var(--amber)':'var(--text)'};">${h.stats?.[k]||0}</div>
-          <div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);">${k==='corrected'?'corr':k}</div>
-        </div>`).join('')}
-    </div>
-    ${defs.filter(d=>!d.corrected).length>0 ? `
-      <div style="font-family:'Oswald',sans-serif;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:#f87171;margin-bottom:8px;">Outstanding Deficiencies</div>
-      ${defs.filter(d=>!d.corrected).map(d=>`
-        <div class="deficiency-entry">
-          <div class="deficiency-section">${d.section}</div>
-          <div class="deficiency-item-name">${d.item}</div>
-          ${d.note?`<div class="deficiency-item-note">${d.note}</div>`:''}
-          ${d.photos?.length?`<div style="margin-top:6px;display:flex;gap:4px;">${d.photos.map(p=>`<img src="${p}" style="width:48px;height:48px;object-fit:cover;border-radius:3px;border:1px solid var(--border);">`).join('')}</div>`:''}
-        </div>`).join('')}` : ''}
-    ${defs.filter(d=>d.corrected).length>0 ? `
-      <div style="font-family:'Oswald',sans-serif;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:var(--amber);margin-top:12px;margin-bottom:8px;">Corrected During This Check</div>
-      ${defs.filter(d=>d.corrected).map(d=>`
-        <div style="background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.3);border-radius:var(--radius);padding:11px 15px;margin-bottom:8px;">
-          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--amber);margin-bottom:2px;">${d.section}</div>
-          <div style="font-size:14px;color:var(--text);">${d.item}</div>
-          ${d.note?`<div style="font-size:12px;color:var(--text-muted);margin-top:3px;font-style:italic;">${d.note}</div>`:''}
-        </div>`).join('')}` : ''}
-    ${defs.length===0 ? `<div style="text-align:center;color:var(--text-muted);padding:16px;font-size:14px;">✓ No deficiencies on this check.</div>` : ''}`;
-  document.getElementById('historyModal').classList.add('visible');
-}
-
-function tcCloseModal() { document.getElementById('historyModal').classList.remove('visible'); }
-
-// ════════════════════════════════════════════════════
-// TOAST
-// ════════════════════════════════════════════════════
-function toast(msg, type='success') {
-  const t=document.getElementById('toast');
-  t.textContent=msg; t.className=`toast ${type} visible`;
-  clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove('visible'),5000);
-}
-
-// ════════════════════════════════════════════════════
-// INIT
-// ════════════════════════════════════════════════════
-renderStep();
-
-
 
 </script>
 
@@ -4424,7 +3755,7 @@ renderStep();
   </div>
 </div>
 
-<!-- Loading overlay for truck check submit -->
+<!-- TC overlays -->
 <div class="loading-overlay" id="loadingOverlay">
   <div class="loader">
     <div class="spinner"></div>
@@ -4432,8 +3763,15 @@ renderStep();
     <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Sending report...</div>
   </div>
 </div>
-
-<!-- History detail modal for truck check -->
+<div class="modal-overlay" id="historyModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="tcModalTitle">Check Details</div>
+      <button class="modal-close" onclick="tcCloseModal()">✕</button>
+    </div>
+    <div class="modal-body" id="tcModalBody"></div>
+  </div>
+</div>
 
 </body>
 </html>
