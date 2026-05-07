@@ -3478,7 +3478,7 @@ async function submitCheck() {
   try {
     const subj=`[PFD Check] ${u.name} — ${S.info.date} — ${defs.length>0?'⚠ '+defs.length+' DEFICIENCY':corrs.length>0?'✓ CLEAR / '+corrs.length+' CORRECTED':'✓ ALL CLEAR'}`;
     try {
-      await emailjs.send('service_1t5c2es', 'template_z853n2o', {subject:subj, to_email:'jason.garrison@quapawfire.com', report:r});
+      await emailjs.send('service_svcugee', 'template_gyt8w8l', {Subject:subj, to_email:'jason.garrison@quapawfire.com', report:r});
     } catch(emailErr) {
       console.warn('Email send failed (non-fatal):', emailErr?.text||emailErr?.message);
     }
