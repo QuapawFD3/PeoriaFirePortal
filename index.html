@@ -2849,8 +2849,9 @@ function closeModal(){document.getElementById('runModal').classList.remove('visi
 // ═══════════════════════════════════════════════
 function renderRoster(){
   document.getElementById('rosterGrid').innerHTML=ROSTER.map(m=>{
-    const ini=m.name.split(' ').map(n=>n[0]).join('').slice(0,2);
-    return `<div class="roster-card"><div class="roster-avatar">${ini}</div><div><div class="roster-name">${m.name}</div></div></div>`;
+    const name=typeof m==='string'?m:m.name;
+    const ini=name.split(' ').map(n=>n[0]).join('').slice(0,2);
+    return `<div class="roster-card"><div class="roster-avatar">${ini}</div><div><div class="roster-name">${name}</div></div></div>`;
   }).join('');
 }
 
