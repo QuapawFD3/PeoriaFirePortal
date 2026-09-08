@@ -524,6 +524,9 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-
 
 
 .tc-view{display:none;}.tc-view.active{display:block;}
+
+.auth-login-btn{background:var(--red);border:none;color:#fff;font-family:'Oswald',sans-serif;font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:6px 14px;border-radius:4px;cursor:pointer;transition:background .2s;}
+.auth-login-btn:hover{background:#b91c1c;}
 </style>
 </head>
 <body>
@@ -586,69 +589,64 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-
       </div>
     </div>
 
-    <div id="gatedHomeModules" style="display:none;">
-    <div class="portal-section-label">Operational Tools <span class="gate-lock">🔓</span></div>
-    <div class="module-grid">
-      <div class="module-card" style="--module-color:#dc2626" onclick="openModule('truck-check')">
-        <span class="module-badge badge-live">LIVE</span>
-        <span class="module-icon">🚒</span>
-        <div class="module-name">Truck Checks</div>
-        <div class="module-desc">NFPA 1911 apparatus inspections</div>
-      </div>
-      <div class="module-card" style="--module-color:#2563eb" onclick="openModule('hose')">
-        <span class="module-badge badge-live">LIVE</span>
-        <span class="module-icon">🚿</span>
-        <div class="module-name">Hose Tests</div>
-        <div class="module-desc">Inventory, test history, NFPA 1962 records</div>
-      </div>
-      <div class="module-card" style="--module-color:#16a34a" onclick="openModule('scba')">
-        <span class="module-badge badge-live">LIVE</span>
-        <span class="module-icon">😮‍💨</span>
-        <div class="module-name">SCBA Checks</div>
-        <div class="module-desc">Packs, cylinders, masks · NFPA 1852</div>
-      </div>
-    </div>
-    <div class="portal-section-label">Records &amp; Admin <span class="gate-lock">🔓</span></div>
-    <div class="module-grid">
-      <div class="module-card" style="--module-color:#16a34a" onclick="openModule('roster')">
-        <span class="module-badge badge-live">LIVE</span>
-        <span class="module-icon">👥</span>
-        <div class="module-name">Member Roster</div>
-        <div class="module-desc">Contact directory, 12 active members</div>
-      </div>
-      <div class="module-card" style="--module-color:#6366f1" onclick="openModule('hydrant')">
-        <span class="module-badge badge-live">LIVE</span>
-        <span class="module-icon">💧</span>
-        <div class="module-name">Hydrant Flow Tests</div>
-        <div class="module-desc">Flow test records, GPM, residual data</div>
-      </div>
-    </div>
-  </div>
-</div>
-    </div>
-
-
-<!-- ══ LOGIN ═══════════════════════════════════════ -->
-<div class="view" id="view-login">
-  <div style="max-width:440px;margin:80px auto;padding:0 24px;">
-    <button class="back-btn" onclick="goHome()" style="margin-bottom:24px;">← Back</button>
-    <div class="auth-gate visible" id="authGate" style="position:static;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:32px;">
+    <div class="auth-gate" id="authGate">
       <div class="auth-title">Member Login</div>
-      <div class="auth-sub">Access restricted to @quapawfire.com accounts</div>
+      <div class="auth-sub">Sign in to access Operational Tools and Records</div>
       <div class="auth-field">
         <label class="auth-label">Email</label>
-        <input class="auth-input" type="email" id="authEmail" placeholder="you@quapawfire.com" onkeydown="if(event.key==='Enter')authSignIn()">
+        <input class="auth-input" id="authEmail" type="email" placeholder="you@quapawfire.com" autocomplete="email" onkeydown="if(event.key==='Enter')authSignIn()">
       </div>
       <div class="auth-field">
         <label class="auth-label">Password</label>
-        <input class="auth-input" type="password" id="authPassword" placeholder="••••••••" onkeydown="if(event.key==='Enter')authSignIn()">
+        <input class="auth-input" id="authPassword" type="password" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')authSignIn()">
       </div>
       <button class="auth-btn" id="authBtn" onclick="authSignIn()">Sign In</button>
       <div class="auth-error" id="authError"></div>
       <div class="auth-forgot"><a onclick="authForgot()">Forgot password?</a></div>
     </div>
+
+    <div id="gatedSections" style="display:none;">
+      <div class="portal-section-label">Operational Tools</div>
+      <div class="module-grid">
+        <div class="module-card" style="--module-color:#dc2626" onclick="openModule('truck-check')">
+          <span class="module-badge badge-live">LIVE</span>
+          <span class="module-icon">🚒</span>
+          <div class="module-name">Truck Checks</div>
+          <div class="module-desc">NFPA 1911 apparatus inspections</div>
+        </div>
+        <div class="module-card" style="--module-color:#2563eb" onclick="openModule('hose')">
+          <span class="module-badge badge-live">LIVE</span>
+          <span class="module-icon">🚿</span>
+          <div class="module-name">Hose Tests</div>
+          <div class="module-desc">Inventory, test history, NFPA 1962 records</div>
+        </div>
+        <div class="module-card" style="--module-color:#16a34a" onclick="openModule('scba')">
+          <span class="module-badge badge-live">LIVE</span>
+          <span class="module-icon">😮‍💨</span>
+          <div class="module-name">SCBA Checks</div>
+          <div class="module-desc">Packs, cylinders, masks · NFPA 1852</div>
+        </div>
+      </div>
+      <div class="portal-section-label">Records &amp; Admin</div>
+      <div class="module-grid">
+        <div class="module-card" style="--module-color:#16a34a" onclick="openModule('roster')">
+          <span class="module-badge badge-live">LIVE</span>
+          <span class="module-icon">👥</span>
+          <div class="module-name">Member Roster</div>
+          <div class="module-desc">Contact directory, 12 active members</div>
+        </div>
+        <div class="module-card" style="--module-color:#6366f1" onclick="openModule('hydrant')">
+          <span class="module-badge badge-live">LIVE</span>
+          <span class="module-icon">💧</span>
+          <div class="module-name">Hydrant Flow Tests</div>
+          <div class="module-desc">Flow test records, GPM, residual data</div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
+
+
 
 <!-- ══ RUN LOG ════════════════════════════════════════ -->
 <div class="view" id="view-run-log">
@@ -1086,20 +1084,22 @@ const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 // Auth state listener and session check are initialized in DOMContentLoaded below
 
 function setAuthState(isLoggedIn, email) {
+  const gate      = document.getElementById('authGate');
+  const gated     = document.getElementById('gatedSections');
   const userBar   = document.getElementById('authUserBar');
   const userEmail = document.getElementById('authUserEmail');
-  const gated     = document.getElementById('gatedHomeModules');
   if(isLoggedIn) {
+    if(gate)  gate.style.display  = 'none';
+    if(gated) gated.style.display = '';
     userBar.classList.add('visible');
     userEmail.textContent = email;
-    if(gated) gated.style.display = '';
   } else {
+    if(gate)  gate.style.display  = '';
+    if(gated) gated.style.display = 'none';
     userBar.classList.remove('visible');
     userEmail.textContent = '';
-    if(gated) gated.style.display = 'none';
   }
-}
-async function authSignIn() {
+}async function authSignIn() {
   const email    = document.getElementById('authEmail').value.trim();
   const password = document.getElementById('authPassword').value;
   const btn      = document.getElementById('authBtn');
@@ -1212,6 +1212,7 @@ document.addEventListener('DOMContentLoaded', async function(){
 
   sb.auth.onAuthStateChange((event, session) => {
     setAuthState(!!session, session?.user?.email || null);
+    if(event === 'SIGNED_IN') goHome();
   });
 
   // Kick off live 2026 data in the background
@@ -1241,7 +1242,11 @@ async function openModule(mod){
   const gated = ['hose','scba','hydrant','roster','truck-check'];
   if(gated.includes(mod)){
     const { data:{ session } } = await sb.auth.getSession();
-    if(!session){ showView('login'); return; }
+    if(!session){
+      goHome();
+      document.getElementById('authGate').scrollIntoView({behavior:'smooth'});
+      return;
+    }
   }
   if(mod==='roster'){renderRoster();showView('roster');return;}
   if(mod==='truck-check'){showView('truck-check');renderStep();return;}
@@ -1250,8 +1255,7 @@ async function openModule(mod){
   if(mod==='hose'){showView('hose');return;}
   if(mod==='scba'){showView('scba');return;}
   if(mod==='hydrant'){showView('hydrant');return;}
-}
-// ═══════════════════════════════════════════════
+}// ═══════════════════════════════════════════════
 // HYDRANT MAP MODULE
 // Hydrant locations — add via Pin Editor
 // ═══════════════════════════════════════════════
