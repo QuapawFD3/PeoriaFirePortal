@@ -585,6 +585,23 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-
     <div class="auth-forgot"><a onclick="authForgot()">Forgot password?</a></div>
   </div>
 
+    <div class="portal-section-label">Run Information</div>
+    <div class="module-grid">
+      <div class="module-card" style="--module-color:#dc2626" onclick="openModule('run-log')">
+        <span class="module-badge badge-live">LIVE</span>
+        <span class="module-icon">📟</span>
+        <div class="module-name">Run Log</div>
+        <div class="module-desc">Full incident history from JotForm</div>
+      </div>
+      <div class="module-card" style="--module-color:#f59e0b" onclick="openModule('run-stats')">
+        <span class="module-badge badge-live">2026</span>
+        <span class="module-icon">📊</span>
+        <div class="module-name">Run Statistics</div>
+        <div class="module-desc">Member leaderboards &amp; monthly trends</div>
+      </div>
+    </div>
+
+
   <div id="gatedSections" style="display:none;">
   <div class="portal-main">
     <div class="portal-section-label">Operational Tools <span class="gate-lock">🔓</span></div>
