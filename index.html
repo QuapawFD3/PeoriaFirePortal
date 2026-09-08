@@ -3352,7 +3352,7 @@ async function renderEquipment() {
   if(error){ el.innerHTML = '<div class="empty-state">Error: '+error.message+'</div>'; return; }
   equipData = data || [];
   if(!equipData.length){
-    el.innerHTML = '<div class="empty-state"><div style="font-size:36px;margin-bottom:12px;">🔧</div><div style="font-family:'Oswald',sans-serif;font-size:15px;text-transform:uppercase;margin-bottom:6px;">No Equipment Found</div><div style="font-size:13px;color:var(--text-muted);">Click &quot;+ Add Item&quot; to add your first entry.</div></div>';
+    el.innerHTML = `<div class="empty-state"><div style="font-size:36px;margin-bottom:12px;">🔧</div><div style="font-family:'Oswald',sans-serif;font-size:15px;text-transform:uppercase;margin-bottom:6px;">No Equipment Found</div><div style="font-size:13px;color:var(--text-muted);">Click &quot;+ Add Item&quot; to add your first entry.</div></div>`;
     return;
   }
   const condColor = {'Good':'var(--green)','Needs Service':'var(--amber)','Out of Service':'var(--red)'};
