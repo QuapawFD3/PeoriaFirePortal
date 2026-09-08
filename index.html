@@ -635,6 +635,12 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-
           <div class="module-name">Member Roster</div>
           <div class="module-desc">Contact directory, 12 active members</div>
         </div>
+        <div class="module-card" style="--module-color:#f97316" onclick="openModule('equipment')">
+          <span class="module-badge badge-live">LIVE</span>
+          <span class="module-icon">🔧</span>
+          <div class="module-name">Equipment Inventory</div>
+          <div class="module-desc">Tools, gear, and apparatus equipment</div>
+        </div>
         <div class="module-card" style="--module-color:#6366f1" onclick="openModule('hydrant')">
           <span class="module-badge badge-live">LIVE</span>
           <span class="module-icon">💧</span>
@@ -1255,6 +1261,7 @@ async function openModule(mod){
   if(mod==='hose'){showView('hose');return;}
   if(mod==='scba'){showView('scba');return;}
   if(mod==='hydrant'){showView('hydrant');return;}
+  if(mod==='equipment'){renderEquipment();showView('equipment');return;}
 }// ═══════════════════════════════════════════════
 // HYDRANT MAP MODULE
 // Hydrant locations — add via Pin Editor
@@ -3325,6 +3332,101 @@ function updateHomeStats(){
 // 2026 LIVE DATA — Missed Calls + Member Stats
 
 
+
+// ═══════════════════════════════════════════════
+// EQUIPMENT INVENTORY
+// ═══════════════════════════════════════════════
+let equipData = [];
+
+async function renderEquipment() {
+  const el = document.getElementById('equipmentContent');
+  el.innerHTML = '<div class="loading-state"><div class="spinner"></div>Loading...</div>';
+  const cat  = document.getElementById('eqFilterCat')?.value  || '';
+  const unit = document.getElementById('eqFilterUnit')?.value || '';
+  const cond = document.getElementById('eqFilterCond')?.value || '';
+  let query = sb.from('equipment_inventory').select('*').order('category').order('name');
+  if(cat)  query = query.eq('category', cat);
+  if(unit) query = query.eq('unit_assigned', unit);
+  if(cond) query = query.eq('condition', cond);
+  const { data, error } = await query;
+  if(error){ el.innerHTML = '<div class="empty-state">Error: '+error.message+'</div>'; return; }
+  equipData = data || [];
+  if(!equipData.length){
+    el.innerHTML = '<div class="empty-state"><div style="font-size:36px;margin-bottom:12px;">🔧</div><div style="font-family:'Oswald',sans-serif;font-size:15px;text-transform:uppercase;margin-bottom:6px;">No Equipment Found</div><div style="font-size:13px;color:var(--text-muted);">Click &quot;+ Add Item&quot; to add your first entry.</div></div>';
+    return;
+  }
+  const condColor = {'Good':'var(--green)','Needs Service':'var(--amber)','Out of Service':'var(--red)'};
+  const condBg    = {'Good':'rgba(22,163,74,.15)','Needs Service':'rgba(245,158,11,.15)','Out of Service':'rgba(220,38,38,.15)'};
+  el.innerHTML = '<table class="history-table"><thead><tr><th>Item</th><th>Category</th><th>Qty</th><th>Unit</th><th>Condition</th><th>Serial #</th><th style="text-align:right;">Actions</th></tr></thead><tbody>'
+    + equipData.map(item => '<tr>'
+      + '<td><div style="font-weight:600;">'+item.name+'</div>'+(item.notes?'<div style="font-size:11px;color:var(--text-muted);margin-top:2px;">'+item.notes+'</div>':'')+'</td>'
+      + '<td><span style="font-size:11px;background:var(--surface2);border:1px solid var(--border);border-radius:3px;padding:2px 7px;">'+item.category+'</span></td>'
+      + '<td style="font-family:'JetBrains Mono',monospace;">'+item.quantity+'</td>'
+      + '<td>'+(item.unit_assigned||'<span style="color:var(--text-dim);">—</span>')+'</td>'
+      + '<td><span style="font-size:11px;font-weight:600;background:'+(condBg[item.condition]||'var(--surface2)')+';color:'+(condColor[item.condition]||'var(--text)')+';border-radius:3px;padding:2px 8px;">'+item.condition+'</span></td>'
+      + '<td style="font-family:'JetBrains Mono',monospace;font-size:12px;">'+(item.serial_number||'<span style="color:var(--text-dim);">—</span>')+'</td>'
+      + '<td style="text-align:right;white-space:nowrap;">'
+        + '<button class="btn-secondary" style="font-size:11px;padding:3px 10px;margin-right:4px;" onclick="editEquipment(''+item.id+'')">Edit</button>'
+        + '<button class="danger-btn" style="font-size:11px;padding:3px 10px;" onclick="deleteEquipment(''+item.id+'',''+item.name.replace(/'/g,"\'")+'')" >Delete</button>'
+      + '</td></tr>'
+    ).join('')
+    + '</tbody></table><div style="font-size:12px;color:var(--text-muted);margin-top:12px;">'+equipData.length+' item'+(equipData.length!==1?'s':'')+'</div>';
+}
+
+function openEquipModal(item) {
+  document.getElementById('equipEditId').value   = item?.id || '';
+  document.getElementById('equipName').value     = item?.name || '';
+  document.getElementById('equipCat').value      = item?.category || 'Hand Tools';
+  document.getElementById('equipQty').value      = item?.quantity ?? 1;
+  document.getElementById('equipUnit').value     = item?.unit_assigned || '';
+  document.getElementById('equipCond').value     = item?.condition || 'Good';
+  document.getElementById('equipSerial').value   = item?.serial_number || '';
+  document.getElementById('equipNotes').value    = item?.notes || '';
+  document.getElementById('equipModalTitle').textContent = item ? 'Edit Equipment' : 'Add Equipment';
+  document.getElementById('equipModalError').style.display = 'none';
+  document.getElementById('equipModal').classList.add('visible');
+}
+
+function closeEquipModal() { document.getElementById('equipModal').classList.remove('visible'); }
+
+function editEquipment(id) {
+  const item = equipData.find(e => e.id === id);
+  if(item) openEquipModal(item);
+}
+
+async function deleteEquipment(id, name) {
+  if(!confirm('Delete "'+name+'"?')) return;
+  const { error } = await sb.from('equipment_inventory').delete().eq('id', id);
+  if(error){ alert('Error: '+error.message); return; }
+  renderEquipment();
+}
+
+async function saveEquipment() {
+  const errEl = document.getElementById('equipModalError');
+  const name  = document.getElementById('equipName').value.trim();
+  if(!name){ errEl.textContent='Item name is required.'; errEl.style.display='block'; return; }
+  const payload = {
+    name,
+    category:      document.getElementById('equipCat').value,
+    quantity:      parseInt(document.getElementById('equipQty').value)||1,
+    unit_assigned: document.getElementById('equipUnit').value||null,
+    condition:     document.getElementById('equipCond').value,
+    serial_number: document.getElementById('equipSerial').value.trim()||null,
+    notes:         document.getElementById('equipNotes').value.trim()||null,
+    updated_at:    new Date().toISOString(),
+  };
+  const editId = document.getElementById('equipEditId').value;
+  let error;
+  if(editId){
+    ({error} = await sb.from('equipment_inventory').update(payload).eq('id', editId));
+  } else {
+    ({error} = await sb.from('equipment_inventory').insert([payload]));
+  }
+  if(error){ errEl.textContent='Error: '+error.message; errEl.style.display='block'; return; }
+  closeEquipModal();
+  renderEquipment();
+}
+
 </script>
 
 <!-- ══ TRUCK CHECK ═══════════════════════════════════════ -->
@@ -4072,6 +4174,111 @@ function toast(msg, type='success') {
 renderStep();
 
 </script>
+
+
+<!-- ══ EQUIPMENT INVENTORY ══════════════════════════════ -->
+<div class="view" id="view-equipment">
+  <div class="inner-header">
+    <button class="back-btn" onclick="goHome()">← Back</button>
+    <span class="inner-divider">/</span>
+    <span class="inner-title">Equipment Inventory</span>
+    <button class="btn-secondary" style="margin-left:auto;font-size:12px;padding:5px 14px;" onclick="openEquipModal()">+ Add Item</button>
+  </div>
+  <div class="module-content">
+    <div style="display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;">
+      <select id="eqFilterCat" class="form-input" style="width:auto;min-width:160px;" onchange="renderEquipment()">
+        <option value="">All Categories</option>
+        <option>Hand Tools</option>
+        <option>Power Tools</option>
+        <option>Medical</option>
+        <option>Rescue</option>
+        <option>Wildland</option>
+        <option>PPE</option>
+        <option>Communications</option>
+        <option>Other</option>
+      </select>
+      <select id="eqFilterUnit" class="form-input" style="width:auto;min-width:160px;" onchange="renderEquipment()">
+        <option value="">All Units</option>
+        <option>Brush 42</option>
+        <option>Brush 43</option>
+        <option>Tanker 45</option>
+        <option>Brush Tanker 46.1</option>
+        <option>Brush Tanker 46.2</option>
+        <option>Brush 47</option>
+        <option>Rescue 48</option>
+        <option>Engine 49</option>
+        <option>Station</option>
+      </select>
+      <select id="eqFilterCond" class="form-input" style="width:auto;min-width:160px;" onchange="renderEquipment()">
+        <option value="">All Conditions</option>
+        <option>Good</option>
+        <option>Needs Service</option>
+        <option>Out of Service</option>
+      </select>
+      <button class="btn-secondary" style="font-size:12px;padding:5px 14px;" onclick="document.getElementById('eqFilterCat').value='';document.getElementById('eqFilterUnit').value='';document.getElementById('eqFilterCond').value='';renderEquipment()">Clear</button>
+    </div>
+    <div id="equipmentContent"><div class="loading-state"><div class="spinner"></div>Loading...</div></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="equipModal">
+  <div class="modal" style="max-width:520px;">
+    <div class="modal-header">
+      <div class="modal-title" id="equipModalTitle">Add Equipment</div>
+      <button class="modal-close" onclick="closeEquipModal()">&#10005;</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="equipEditId">
+      <div class="form-grid">
+        <div class="form-group" style="grid-column:1/-1;">
+          <label class="form-label">Item Name <span class="required-mark">*</span></label>
+          <input class="form-input" id="equipName" type="text" placeholder="e.g. Halligan Bar">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Category <span class="required-mark">*</span></label>
+          <select class="form-input" id="equipCat">
+            <option>Hand Tools</option><option>Power Tools</option><option>Medical</option>
+            <option>Rescue</option><option>Wildland</option><option>PPE</option>
+            <option>Communications</option><option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Quantity</label>
+          <input class="form-input" id="equipQty" type="number" min="1" value="1">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Assigned Unit</label>
+          <select class="form-input" id="equipUnit">
+            <option value="">-- None --</option>
+            <option>Brush 42</option><option>Brush 43</option><option>Tanker 45</option>
+            <option>Brush Tanker 46.1</option><option>Brush Tanker 46.2</option>
+            <option>Brush 47</option><option>Rescue 48</option><option>Engine 49</option>
+            <option>Station</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Condition</label>
+          <select class="form-input" id="equipCond">
+            <option>Good</option><option>Needs Service</option><option>Out of Service</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Serial / ID #</label>
+          <input class="form-input" id="equipSerial" type="text" placeholder="Optional">
+        </div>
+        <div class="form-group" style="grid-column:1/-1;">
+          <label class="form-label">Notes</label>
+          <textarea class="form-input" id="equipNotes" style="min-height:70px;resize:vertical;" placeholder="Optional"></textarea>
+        </div>
+      </div>
+      <div id="equipModalError" style="color:var(--red);font-size:13px;margin-top:8px;display:none;"></div>
+      <div style="display:flex;gap:10px;margin-top:20px;justify-content:flex-end;">
+        <button class="btn-secondary" onclick="closeEquipModal()">Cancel</button>
+        <button class="btn btn-success" onclick="saveEquipment()">Save Item</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 </body>
 </html>
