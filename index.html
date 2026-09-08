@@ -567,24 +567,7 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-
       <div class="pstat"><div class="pstat-val" id="homeResponded" style="color:var(--green);">…</div><div class="pstat-lbl">2026 Responded</div></div>
     </div>
   </div>
-  
-  <!-- AUTH GATE -->
-  <div class="auth-gate visible" id="authGate">
-    <div class="auth-title">Member Login</div>
-    <div class="auth-sub">Access restricted to @quapawfire.com accounts</div>
-    <div class="auth-field">
-      <label class="auth-label">Email</label>
-      <input class="auth-input" type="email" id="authEmail" placeholder="you@quapawfire.com" onkeydown="if(event.key==='Enter')authSignIn()">
-    </div>
-    <div class="auth-field">
-      <label class="auth-label">Password</label>
-      <input class="auth-input" type="password" id="authPassword" placeholder="••••••••" onkeydown="if(event.key==='Enter')authSignIn()">
-    </div>
-    <button class="auth-btn" id="authBtn" onclick="authSignIn()">Sign In</button>
-    <div class="auth-error" id="authError"></div>
-    <div class="auth-forgot"><a onclick="authForgot()">Forgot password?</a></div>
-  </div>
-
+  <div class="portal-main">
     <div class="portal-section-label">Run Information</div>
     <div class="module-grid">
       <div class="module-card" style="--module-color:#dc2626" onclick="openModule('run-log')">
@@ -600,79 +583,64 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-
         <div class="module-desc">Member leaderboards &amp; monthly trends</div>
       </div>
     </div>
-
-
-  <div id="gatedSections" style="display:none;">
-  <div class="portal-main">
     <div class="portal-section-label">Operational Tools <span class="gate-lock">🔓</span></div>
-      <div class="module-grid">
-        <div class="module-card" style="--module-color:#dc2626" onclick="openModule('truck-check')">
-          <span class="module-badge badge-live">LIVE</span>
-          <span class="module-icon">🚒</span>
-          <div class="module-name">Truck Checks</div>
-          <div class="module-desc">NFPA 1911 apparatus inspections</div>
-        </div>
-        <div class="module-card" style="--module-color:#2563eb" onclick="openModule('hose')">
-          <span class="module-badge badge-live">LIVE</span>
-          <span class="module-icon">🚿</span>
-          <div class="module-name">Hose Checks</div>
-          <div class="module-desc">Inventory, test history, NFPA 1962 records</div>
-        </div>
-        <div class="module-card" style="--module-color:#16a34a" onclick="openModule('scba')">
-          <span class="module-badge badge-live">LIVE</span>
-          <span class="module-icon">😮‍💨</span>
-          <div class="module-name">SCBA Checks</div>
-          <div class="module-desc">Packs, cylinders, masks · NFPA 1852</div>
-        </div>
-        <div class="module-card" style="--module-color:#2563eb" onclick="openModule('hydrant')">
-          <span class="module-badge badge-live">LIVE</span>
-          <span class="module-icon">💧</span>
-          <div class="module-name">Hydrant Checks</div>
-          <div class="module-desc">Map · Flow test records · Record new test</div>
-        </div>
-        <div class="module-card" style="--module-color:#f59e0b" onclick="cs('equipment')">
-          <span class="module-badge badge-soon">SOON</span>
-          <span class="module-icon">🔧</span>
-          <div class="module-name">Equipment Checks</div>
-          <div class="module-desc">Service logs for tools and equipment</div>
-        </div>
-      </div>
-      
-    <div class="portal-section-label">Run Information</div>
     <div class="module-grid">
-      <div class="module-card" style="--module-color:#dc2626" onclick="openModule('run-log')">
+      <div class="module-card" style="--module-color:#dc2626" onclick="openModule('truck-check')">
         <span class="module-badge badge-live">LIVE</span>
-        <span class="module-icon">📟</span>
-        <div class="module-name">Run Log</div>
-        <div class="module-desc">Full incident history from JotForm</div>
+        <span class="module-icon">🚒</span>
+        <div class="module-name">Truck Checks</div>
+        <div class="module-desc">NFPA 1911 apparatus inspections</div>
       </div>
-      <div class="module-card" style="--module-color:#f59e0b" onclick="openModule('run-stats')">
-        <span class="module-badge badge-live">2026</span>
-        <span class="module-icon">📊</span>
-        <div class="module-name">Run Statistics</div>
-        <div class="module-desc">Member leaderboards & monthly trends</div>
+      <div class="module-card" style="--module-color:#2563eb" onclick="openModule('hose')">
+        <span class="module-badge badge-live">LIVE</span>
+        <span class="module-icon">🚿</span>
+        <div class="module-name">Hose Tests</div>
+        <div class="module-desc">Inventory, test history, NFPA 1962 records</div>
+      </div>
+      <div class="module-card" style="--module-color:#16a34a" onclick="openModule('scba')">
+        <span class="module-badge badge-live">LIVE</span>
+        <span class="module-icon">😮‍💨</span>
+        <div class="module-name">SCBA Checks</div>
+        <div class="module-desc">Packs, cylinders, masks · NFPA 1852</div>
       </div>
     </div>
-<div class="portal-section-label">Records & Admin <span class="gate-lock">🔓</span></div>
-      <div class="module-grid">
-        <div class="module-card" style="--module-color:#16a34a" onclick="openModule('roster')">
-          <span class="module-badge badge-live">LIVE</span>
-          <span class="module-icon">👥</span>
-          <div class="module-name">Member Roster</div>
-          <div class="module-desc">Contact directory, 12 active members</div>
-        </div>
-        <div class="module-card" style="--module-color:#f59e0b" onclick="cs('training')">
-          <span class="module-badge badge-soon">SOON</span>
-          <span class="module-icon">📚</span>
-          <div class="module-name">Training Log</div>
-          <div class="module-desc">Hours, certs, compliance tracking</div>
-        </div>
+    <div class="portal-section-label">Records &amp; Admin <span class="gate-lock">🔓</span></div>
+    <div class="module-grid">
+      <div class="module-card" style="--module-color:#16a34a" onclick="openModule('roster')">
+        <span class="module-badge badge-live">LIVE</span>
+        <span class="module-icon">👥</span>
+        <div class="module-name">Member Roster</div>
+        <div class="module-desc">Contact directory, 12 active members</div>
+      </div>
+      <div class="module-card" style="--module-color:#6366f1" onclick="openModule('hydrant')">
+        <span class="module-badge badge-live">LIVE</span>
+        <span class="module-icon">💧</span>
+        <div class="module-name">Hydrant Checks</div>
+        <div class="module-desc">Flow tests, map, NFPA 291 records</div>
       </div>
     </div>
 
+    <!-- AUTH GATE -->
+    <div class="auth-gate visible" id="authGate">
+      <div class="auth-title">Member Login</div>
+      <div class="auth-sub">Access restricted to @quapawfire.com accounts</div>
+      <div class="auth-field">
+        <label class="auth-label">Email</label>
+        <input class="auth-input" type="email" id="authEmail" placeholder="you@quapawfire.com" onkeydown="if(event.key==='Enter')authSignIn()">
+      </div>
+      <div class="auth-field">
+        <label class="auth-label">Password</label>
+        <input class="auth-input" type="password" id="authPassword" placeholder="••••••••" onkeydown="if(event.key==='Enter')authSignIn()">
+      </div>
+      <button class="auth-btn" id="authBtn" onclick="authSignIn()">Sign In</button>
+      <div class="auth-error" id="authError"></div>
+      <div class="auth-forgot"><a onclick="authForgot()">Forgot password?</a></div>
+    </div>
+
+    <div id="gatedSections" style="display:none;">
+    </div>
   </div>
 </div>
-  </div>
 
 <!-- ══ RUN LOG ════════════════════════════════════════ -->
 <div class="view" id="view-run-log">
@@ -1265,9 +1233,9 @@ function cs(key){
   document.getElementById('csFeatures').innerHTML=d.f.map(x=>`<div class="cs-feature">${x}</div>`).join('');
   showView('coming-soon');
 }
-async function openModule(mod){
+async async function openModule(mod){
   // Check auth for gated modules
-  const gated = ['hose','scba','hydrant','roster'];
+  const gated = ['hose','scba','hydrant','roster','truck-check'];
   if(gated.includes(mod)){
     const { data:{ session } } = await sb.auth.getSession();
     if(!session){ goHome(); document.getElementById('authGate').classList.add('visible'); return; }
