@@ -561,7 +561,11 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-
   <div class="portal-hero">
     <div class="portal-title">Peoria FD Operations Portal</div>
     <div class="portal-subtitle">Peoria Volunteer Fire Department · Peoria, Oklahoma</div>
-    
+    <div class="portal-stats-bar">
+      <div class="pstat"><div class="pstat-val" id="homeYTD">…</div><div class="pstat-lbl">2026 YTD Runs</div></div>
+      <div class="pstat-divider"></div>
+      <div class="pstat"><div class="pstat-val" id="homeResponded" style="color:var(--green);">…</div><div class="pstat-lbl">2026 Responded</div></div>
+    </div>
   </div>
   
   <!-- AUTH GATE -->
@@ -2632,11 +2636,11 @@ function selectYear(y,tab){
 // Update the portal home YTD stat bar with live 2026 data
 function updateHomeStats(){
   const el = id => document.getElementById(id);
-  const responded = HIST[2026].total;                          // runs from JotForm (responded)
-  const missed    = HIST[2026].missed;                         // missed calls from missed form
-  const ytd       = (missed != null) ? responded + missed : null; // total = responded + missed
+  const responded = HIST[2026].total;  // runs from JotForm
+  const ytd       = responded || null;
 
-  if(el('homeYTD'))       el('homeYTD').textContent       = ytd       != null ? ytd.toLocaleString()       : '…';
+  if(el('homeYTD'))       el('homeYTD').textContent       = ytd != null ? ytd.toLocaleString() : '…';
+  if(el('homeResponded'))  el('homeResponded').textContent  = responded ? responded.toLocaleString() : '…';
   if(el('homeMissed'))    el('homeMissed').textContent     = missed    != null ? missed.toLocaleString()     : '…';
   if(el('homeResponded')) el('homeResponded').textContent  = responded != null ? responded.toLocaleString() : '…';
 }
@@ -3326,11 +3330,11 @@ function selectYear(y,tab){
 // Update the portal home YTD stat bar with live 2026 data
 function updateHomeStats(){
   const el = id => document.getElementById(id);
-  const responded = HIST[2026].total;                          // runs from JotForm (responded)
-  const missed    = HIST[2026].missed;                         // missed calls from missed form
-  const ytd       = (missed != null) ? responded + missed : null; // total = responded + missed
+  const responded = HIST[2026].total;  // runs from JotForm
+  const ytd       = responded || null;
 
-  if(el('homeYTD'))       el('homeYTD').textContent       = ytd       != null ? ytd.toLocaleString()       : '…';
+  if(el('homeYTD'))       el('homeYTD').textContent       = ytd != null ? ytd.toLocaleString() : '…';
+  if(el('homeResponded'))  el('homeResponded').textContent  = responded ? responded.toLocaleString() : '…';
   if(el('homeMissed'))    el('homeMissed').textContent     = missed    != null ? missed.toLocaleString()     : '…';
   if(el('homeResponded')) el('homeResponded').textContent  = responded != null ? responded.toLocaleString() : '…';
 }
