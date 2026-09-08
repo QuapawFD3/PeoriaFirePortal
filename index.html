@@ -3037,393 +3037,123 @@ function openHydTestFor(label){
 }
 
 // ═══════════════════════════════════════════════
-// RUN STATS
-// ═══════════════════════════════════════════════
-function setStatsTab(tab,btn){
-  currentStatsTab=tab;
-  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  ['thisyear','trend','leaderboard','monthly','members','missed'].forEach(t=>{
-    document.getElementById('stats-'+t).style.display=t===tab?'':'none';
-  });
-  renderStatsTab(tab);
-}
-function renderStatsTab(tab){
-  if(tab==='thisyear') renderThisYear();
-  if(tab==='trend') renderTrend();
-  if(tab==='leaderboard') renderLeaderboard();
-  if(tab==='monthly') renderMonthly();
-  if(tab==='members') renderMembers();
-  if(tab==='missed') renderMissed();
-}
-
-// ── This Year (2026) Per-Firefighter ─────────────────
-function renderThisYear(){
-  const el=document.getElementById('stats-thisyear');
-  if(!runsLoaded){
-    el.innerHTML=`<div class="card"><div style="padding:32px;text-align:center;"><div class="spinner" style="margin:0 auto 10px;"></div><div style="font-size:13px;color:var(--text-muted);">Loading live 2026 run data from JotForm...</div></div></div>`;
-    // Kick off load; compute2026MemberStats will re-render when done
-    return;
-  }
-  const sorted=[...HIST[2026].members].sort((a,b)=>b.total-a.total);
-  const max=sorted[0]?.total||1;
-  const total=HIST[2026].total;
-  const missed=HIST[2026].missed;
-  const grandTotal=(missed!=null) ? total+missed : null;
-  const yearColors={2022:'#dc2626',2023:'#f59e0b',2024:'#2563eb',2025:'#16a34a',2026:'#8b5cf6'};
-  el.innerHTML=`
-    <div class="year-summary-cards" style="grid-template-columns:repeat(5,1fr);margin-bottom:20px;">
-      <div class="yscard"><div class="yscard-val" style="color:var(--red);">${grandTotal!=null?grandTotal:'…'}</div><div class="yscard-lbl">Total Calls (YTD)</div></div>
-      <div class="yscard"><div class="yscard-val" style="color:var(--green);">${total}</div><div class="yscard-lbl">Responded</div></div>
-      <div class="yscard"><div class="yscard-val" style="color:${missed?'var(--amber)':'var(--text-muted)'};">${missed!=null?missed:'…'}</div><div class="yscard-lbl">Missed</div></div>
-      <div class="yscard"><div class="yscard-val">${sorted[0]?.total||'—'}</div><div class="yscard-lbl">Top Run Count</div></div>
-      <div class="yscard"><div class="yscard-val" style="color:var(--text-muted);">${sorted.length}</div><div class="yscard-lbl">Active Responders</div></div>
-    </div>
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title">2026 YTD — Runs Per Firefighter</div>
-        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-muted);">Live from JotForm · Through ${new Date().toLocaleDateString('en-US',{month:'short',day:'numeric'})}</span>
-      </div>
-      <table class="leaderboard">
-        <thead><tr><th>#</th><th>Member</th><th>Runs</th><th>Volume</th><th>% of Calls</th></tr></thead>
-        <tbody>
-          ${sorted.map((m,i)=>`
-            <tr class="rank-${i+1}">
-              <td class="rank-num">${i+1}</td>
-              <td style="font-weight:600;font-size:14px;">${m.name}</td>
-              <td style="font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;color:${yearColors[2026]};">${m.total}</td>
-              <td><div class="run-bar-wrap" style="width:140px;"><div class="run-bar" style="width:${Math.round(m.total/max*100)}%;background:${yearColors[2026]};"></div></div></td>
-              <td style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-muted);">${(m.total/total*100).toFixed(1)}%</td>
-            </tr>`).join('')}
-        </tbody>
-      </table>
-    </div>`;
-}
-
-// ── All-Time Trend ───────────────────────────────
-function renderTrend(){
-  const el=document.getElementById('stats-trend');
-  const maxTotal=Math.max(...YEARS.map(y=>HIST[y].total));
-  // All-time top 5 by summing across years
-  const allMember={};
-  YEARS.forEach(y=>{
-    HIST[y].members.forEach(m=>{
-      if(!allMember[m.name]) allMember[m.name]=0;
-      allMember[m.name]+=m.total;
-    });
-  });
-  const top5=Object.entries(allMember).sort((a,b)=>b[1]-a[1]).slice(0,10);
-  const maxAll=top5[0][1];
-
-  const yearColors={2022:'#dc2626',2023:'#f59e0b',2024:'#2563eb',2025:'#16a34a',2026:'#8b5cf6'};
-
-  el.innerHTML=`
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
-      <div class="card">
-        <div class="card-header"><div class="card-title">Annual Run Volume</div></div>
-        <div class="trend-chart">
-          ${YEARS.map(y=>`
-            <div class="trend-row">
-              <div class="trend-year">${y}</div>
-              <div class="trend-bar-wrap">
-                <div class="trend-bar-inner" style="width:${Math.round(HIST[y].total/maxTotal*100)}%;background:${yearColors[y]};">
-                  ${HIST[y].total>=40?HIST[y].total:''}
-                </div>
-              </div>
-              <div class="trend-total">${HIST[y].total}</div>
-            </div>`).join('')}
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-header"><div class="card-title">Missed / No Response</div></div>
-        <div class="trend-chart">
-          ${YEARS.map(y=>{
-            const m=HIST[y].missed;
-            const maxM=218;
-            return `
-            <div class="trend-row">
-              <div class="trend-year">${y}</div>
-              <div class="trend-bar-wrap">
-                <div class="trend-bar-inner" style="width:${m?Math.round(m/maxM*100):4}%;background:${m?'var(--amber)':'var(--text-dim)'};">
-                  ${m>=20?m:''}
-                </div>
-              </div>
-              <div class="trend-total" style="color:${m?'var(--amber)':'var(--text-dim)'};">${m||'—'}</div>
-            </div>`;}).join('')}
-        </div>
-        <div style="padding:0 20px 16px;font-size:11px;color:var(--text-dim);">* 2022 not tracked · 2026 YTD Apr</div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title">Top Responders (2026)</div>
-        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-muted);">2026 YTD totals</span>
-      </div>
-      <table class="leaderboard">
-        <thead><tr><th>#</th><th>Member</th><th>5-Yr Total</th><th></th><th>2022</th><th>2023</th><th>2024</th><th>2025</th><th>2026</th></tr></thead>
-        <tbody>
-          ${top5.map(([name,tot],i)=>{
-            const byYear=YEARS.map(y=>{
-              const m=HIST[y].members.find(x=>x.name===name);
-              return m?m.total:0;
-            });
-            return `
-              <tr class="rank-${i+1}">
-                <td class="rank-num">${i+1}</td>
-                <td style="font-weight:600;font-size:14px;">${name}</td>
-                <td style="font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:700;color:var(--red);">${tot}</td>
-                <td><div class="run-bar-wrap"><div class="run-bar" style="width:${Math.round(tot/maxAll*100)}%"></div></div></td>
-                ${byYear.map((v,yi)=>`<td style="font-family:'JetBrains Mono',monospace;font-size:12px;color:${v>0?yearColors[YEARS[yi]]:'var(--text-dim)'};">${v||'—'}</td>`).join('')}
-              </tr>`;
-          }).join('')}
-        </tbody>
-      </table>
-    </div>`;
-}
-
-// ── Per-Year Leaderboard ─────────────────────────
-function renderLeaderboard(){
-  const el=document.getElementById('stats-leaderboard');
-  if(selectedYear===2026 && !runsLoaded){
-    el.innerHTML=`<div class="year-selector">${YEARS.map(y=>`<button class="year-btn ${y===selectedYear?'active':''}" onclick="selectYear(${y},'leaderboard')">${y}</button>`).join('')}</div><div class="card" style="margin-top:4px;"><div style="padding:32px;text-align:center;"><div class="spinner" style="margin:0 auto 10px;"></div><div style="font-size:13px;color:var(--text-muted);">Loading live run data from JotForm...</div></div></div>`;
-    return;
-  }
-  const sorted=[...HIST[selectedYear].members].sort((a,b)=>b.total-a.total);
-  const max=sorted[0]?.total||1;
-  el.innerHTML=`
-    <div class="year-selector">${YEARS.map(y=>`<button class="year-btn ${y===selectedYear?'active':''}" onclick="selectYear(${y},'leaderboard')">${y}</button>`).join('')}</div>
-    <div class="year-summary-cards" style="grid-template-columns:repeat(3,1fr);">
-      <div class="yscard"><div class="yscard-val" style="color:var(--red);">${HIST[selectedYear].total}</div><div class="yscard-lbl">Total Runs</div></div>
-      <div class="yscard"><div class="yscard-val" style="color:${HIST[selectedYear].missed?'var(--amber)':'var(--text-muted)'};">${HIST[selectedYear].missed??'…'}</div>${HIST[selectedYear].missedNote?`<div style="font-size:10px;color:var(--text-dim);margin-top:1px;">${HIST[selectedYear].missedNote}</div>`:''}<div class="yscard-lbl">Missed Calls</div></div>
-      <div class="yscard"><div class="yscard-val">${sorted[0]?.total||'—'}</div><div class="yscard-lbl">Top Run Count</div></div>
-    </div>
-    <div class="card">
-      <div class="card-header"><div class="card-title">${selectedYear} — Member Leaderboard</div></div>
-      <table class="leaderboard">
-        <thead><tr><th>#</th><th>Member</th><th>Runs</th><th>Volume</th><th>% of Calls</th></tr></thead>
-        <tbody>
-          ${sorted.map((m,i)=>`
-            <tr class="rank-${i+1}">
-              <td class="rank-num">${i+1}</td>
-              <td style="font-weight:600;font-size:14px;">${m.name}</td>
-              <td style="font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;">${m.total}</td>
-              <td><div class="run-bar-wrap"><div class="run-bar" style="width:${Math.round(m.total/max*100)}%"></div></div></td>
-              <td style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-muted);">${(m.total/HIST[selectedYear].total*100).toFixed(1)}%</td>
-            </tr>`).join('')}
-        </tbody>
-      </table>
-    </div>`;
-}
-
-// ── Monthly Chart ─────────────────────────────────
-function renderMonthly(){
-  const el=document.getElementById('stats-monthly');
-  const mo=HIST[selectedYear].monthly;
-  const max=Math.max(...mo,1);
-  el.innerHTML=`
-    <div class="year-selector">${YEARS.map(y=>`<button class="year-btn ${y===selectedYear?'active':''}" onclick="selectYear(${y},'monthly')">${y}</button>`).join('')}</div>
-    <div class="card">
-      <div class="card-header"><div class="card-title">${selectedYear} — Monthly Run Volume</div><span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-muted);">Total: ${HIST[selectedYear].total}</span></div>
-      <div class="month-chart">
-        ${MONTHS.map((m,i)=>`
-          <div class="month-row">
-            <div class="month-lbl">${m}</div>
-            <div class="month-bar-wrap">
-              <div class="month-bar-inner" style="width:${mo[i]?Math.max(4,Math.round(mo[i]/max*100))+'%':'0%'}">
-                ${mo[i]>=8?mo[i]:''}
-              </div>
-            </div>
-            <div class="month-val">${mo[i]||(selectedYear===2026&&i>=4?'—':mo[i])}</div>
-          </div>`).join('')}
-      </div>
-    </div>`;
-}
-
-// ── By Member Cards ───────────────────────────────
-function renderMembers(){
-  const el=document.getElementById('stats-members');
-  if(selectedYear===2026 && !runsLoaded){
-    el.innerHTML=`<div class="year-selector">${YEARS.map(y=>`<button class="year-btn ${y===selectedYear?'active':''}" onclick="selectYear(${y},'members')">${y}</button>`).join('')}</div><div class="card" style="margin-top:4px;"><div style="padding:32px;text-align:center;"><div class="spinner" style="margin:0 auto 10px;"></div><div style="font-size:13px;color:var(--text-muted);">Loading live run data from JotForm...</div></div></div>`;
-    return;
-  }
-  const sorted=[...HIST[selectedYear].members].sort((a,b)=>b.total-a.total);
-  el.innerHTML=`
-    <div class="year-selector">${YEARS.map(y=>`<button class="year-btn ${y===selectedYear?'active':''}" onclick="selectYear(${y},'members')">${y}</button>`).join('')}</div>
-    <div class="member-grid">${sorted.map(m=>{
-      const maxMo=Math.max(...m.months,1);
-      return `<div class="mscard">
-        <div class="mscard-name">${m.name}</div>
-        <div class="mscard-total">${m.total}</div>
-        <div class="mscard-sub">${(m.total/HIST[selectedYear].total*100).toFixed(1)}% of ${selectedYear} calls</div>
-        <div class="mscard-months">${m.months.map((v,i)=>`<div class="mscard-mo ${v>0?'has':''}" style="${v>0?`opacity:${0.3+v/maxMo*0.7}`:'opacity:0.15'}" title="${MONTHS[i]}: ${v}"></div>`).join('')}</div>
-      </div>`;
-    }).join('')}</div>`;
-}
-
-// ── Missed Calls ──────────────────────────────────
-function renderMissed(){
-  const el=document.getElementById('stats-missed');
-  const y=HIST[selectedYear];
-
-  // For 2026, trigger live load if not yet done
-  if(selectedYear===2026 && !y.liveLoaded){
-    load2026MissedCalls();
-  }
-
-  const missedVal = y.missed!=null ? y.missed : '…';
-  const missedColor = y.missed ? 'var(--amber)' : 'var(--text-muted)';
-  const missRate = y.missed && y.total ? Math.round(y.missed/(y.total+y.missed)*100)+'%' : '—';
-
-  let detailHtml = '';
-  if(selectedYear===2026){
-    if(!y.liveLoaded){
-      detailHtml=`<div class="card" style="margin-top:12px;"><div style="padding:24px;text-align:center;"><div class="spinner" style="margin:0 auto 10px;"></div><div style="font-size:13px;color:var(--text-muted);">Loading live missed call records from JotForm...</div></div></div>`;
-    } else if(y.missedDetails && y.missedDetails.length){
-      detailHtml=`
-      <div class="card" style="margin-top:12px;">
-        <div class="card-header"><div class="card-title">2026 Missed Call Log</div><span style="font-size:11px;color:var(--text-dim);">Live from JotForm · ${y.missedDetails.length} records</span></div>
-        <div style="overflow-x:auto;">
-          <table class="leaderboard">
-            <thead><tr><th>Date</th><th>Time</th><th>Type</th></tr></thead>
-            <tbody>
-              ${y.missedDetails.map(m=>`
-                <tr>
-                  <td style="font-family:'JetBrains Mono',monospace;font-size:12px;white-space:nowrap;">${m.date||'—'}</td>
-                  <td style="font-family:'JetBrains Mono',monospace;font-size:12px;">${m.time||'—'}</td>
-                  <td style="font-size:13px;">${m.type||'—'}</td>
-                </tr>`).join('')}
-            </tbody>
-          </table>
-        </div>
-      </div>`;
-    } else {
-      detailHtml=`<div class="card" style="margin-top:12px;padding:20px;text-align:center;color:var(--text-muted);font-size:13px;">No missed call records found.</div>`;
-    }
-  }
-
-  el.innerHTML=`
-    <div class="year-selector">${YEARS.map(yr=>`<button class="year-btn ${yr===selectedYear?'active':''}" onclick="selectYear(${yr},'missed')">${yr}</button>`).join('')}</div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;">
-      <div class="yscard"><div class="yscard-val" style="color:${missedColor};">${missedVal}</div>${y.missedNote&&y.liveLoaded===false||selectedYear!==2026?`<div style="font-size:10px;color:var(--text-dim);margin-top:1px;">${y.missedNote||''}</div>`:''}<div class="yscard-lbl">Missed ${selectedYear}</div></div>
-      <div class="yscard"><div class="yscard-val">${y.total}</div><div class="yscard-lbl">Responded</div></div>
-      <div class="yscard"><div class="yscard-val" style="color:${y.missed?'var(--amber)':'var(--text-muted)'};">${missRate}</div><div class="yscard-lbl">Miss Rate</div></div>
-    </div>
-    ${detailHtml}`;
-}
-
-function selectYear(y,tab){
-  selectedYear=y;
-  renderStatsTab(tab);
-}
-
-// Update the portal home YTD stat bar with live 2026 data
-function updateHomeStats(){
-  const el = id => document.getElementById(id);
-  const responded = HIST[2026].total;  // runs from JotForm
-  const ytd       = responded || null;
-
-  if(el('homeYTD'))       el('homeYTD').textContent       = ytd != null ? ytd.toLocaleString() : '…';
-  if(el('homeResponded'))  el('homeResponded').textContent  = responded ? responded.toLocaleString() : '…';
-  if(el('homeMissed'))    el('homeMissed').textContent     = missed    != null ? missed.toLocaleString()     : '…';
-  if(el('homeResponded')) el('homeResponded').textContent  = responded != null ? responded.toLocaleString() : '…';
-}
-
-// ═══════════════════════════════════════════════
-// 2026 LIVE DATA — Missed Calls + Member Stats
-
-
-
-// ═══════════════════════════════════════════════
 // EQUIPMENT INVENTORY
 // ═══════════════════════════════════════════════
 let equipData = [];
 
 async function renderEquipment() {
   const el = document.getElementById('equipmentContent');
+  if(!el) return;
   el.innerHTML = '<div class="loading-state"><div class="spinner"></div>Loading...</div>';
+
   const cat  = document.getElementById('eqFilterCat')?.value  || '';
   const unit = document.getElementById('eqFilterUnit')?.value || '';
   const cond = document.getElementById('eqFilterCond')?.value || '';
+
   let query = sb.from('equipment_inventory').select('*').order('category').order('name');
   if(cat)  query = query.eq('category', cat);
   if(unit) query = query.eq('unit_assigned', unit);
   if(cond) query = query.eq('condition', cond);
+
   const { data, error } = await query;
-  if(error){ el.innerHTML = '<div class="empty-state">Error: '+error.message+'</div>'; return; }
+  if(error){ el.innerHTML = '<div class="empty-state">Error: ' + error.message + '</div>'; return; }
   equipData = data || [];
+
   if(!equipData.length){
-    el.innerHTML = `<div class="empty-state"><div style="font-size:36px;margin-bottom:12px;">🔧</div><div style="font-family:'Oswald',sans-serif;font-size:15px;text-transform:uppercase;margin-bottom:6px;">No Equipment Found</div><div style="font-size:13px;color:var(--text-muted);">Click &quot;+ Add Item&quot; to add your first entry.</div></div>`;
+    el.innerHTML = `<div class="empty-state">
+      <div style="font-size:36px;margin-bottom:12px;">🔧</div>
+      <div style="font-family:'Oswald',sans-serif;font-size:15px;text-transform:uppercase;margin-bottom:6px;">No Equipment Found</div>
+      <div style="font-size:13px;color:var(--text-muted);">Click "+ Add Item" to add your first entry.</div>
+    </div>`;
     return;
   }
+
   const condColor = {'Good':'var(--green)','Needs Service':'var(--amber)','Out of Service':'var(--red)'};
   const condBg    = {'Good':'rgba(22,163,74,.15)','Needs Service':'rgba(245,158,11,.15)','Out of Service':'rgba(220,38,38,.15)'};
-  el.innerHTML = '<table class="history-table"><thead><tr><th>Item</th><th>Category</th><th>Qty</th><th>Unit</th><th>Condition</th><th>Serial #</th><th style="text-align:right;">Actions</th></tr></thead><tbody>'
-    + equipData.map(item => '<tr>'
-      + '<td><div style="font-weight:600;">'+item.name+'</div>'+(item.notes?'<div style="font-size:11px;color:var(--text-muted);margin-top:2px;">'+item.notes+'</div>':'')+'</td>'
-      + '<td><span style="font-size:11px;background:var(--surface2);border:1px solid var(--border);border-radius:3px;padding:2px 7px;">'+item.category+'</span></td>'
-      + '<td style="font-family:'JetBrains Mono',monospace;">'+item.quantity+'</td>'
-      + '<td>'+(item.unit_assigned||'<span style="color:var(--text-dim);">—</span>')+'</td>'
-      + '<td><span style="font-size:11px;font-weight:600;background:'+(condBg[item.condition]||'var(--surface2)')+';color:'+(condColor[item.condition]||'var(--text)')+';border-radius:3px;padding:2px 8px;">'+item.condition+'</span></td>'
-      + '<td style="font-family:'JetBrains Mono',monospace;font-size:12px;">'+(item.serial_number||'<span style="color:var(--text-dim);">—</span>')+'</td>'
-      + '<td style="text-align:right;white-space:nowrap;">'
-        + '<button class="btn-secondary" style="font-size:11px;padding:3px 10px;margin-right:4px;" onclick="editEquipment(''+item.id+'')">Edit</button>'
-        + '<button class="danger-btn" style="font-size:11px;padding:3px 10px;" onclick="deleteEquipment(''+item.id+'',''+item.name.replace(/'/g,"\'")+'')" >Delete</button>'
-      + '</td></tr>'
-    ).join('')
-    + '</tbody></table><div style="font-size:12px;color:var(--text-muted);margin-top:12px;">'+equipData.length+' item'+(equipData.length!==1?'s':'')+'</div>';
+
+  let rows = '';
+  equipData.forEach((item, i) => {
+    rows += `<tr>
+      <td><div style="font-weight:600;">${item.name}</div>${item.notes ? `<div style="font-size:11px;color:var(--text-muted);margin-top:2px;">${item.notes}</div>` : ''}</td>
+      <td><span style="font-size:11px;background:var(--surface2);border:1px solid var(--border);border-radius:3px;padding:2px 7px;">${item.category}</span></td>
+      <td style="font-family:'JetBrains Mono',monospace;">${item.quantity}</td>
+      <td>${item.unit_assigned || '<span style="color:var(--text-dim);">—</span>'}</td>
+      <td><span style="font-size:11px;font-weight:600;background:${condBg[item.condition]||'var(--surface2)'};color:${condColor[item.condition]||'var(--text)'};border-radius:3px;padding:2px 8px;">${item.condition}</span></td>
+      <td style="font-family:'JetBrains Mono',monospace;font-size:12px;">${item.serial_number || '<span style="color:var(--text-dim);">—</span>'}</td>
+      <td style="text-align:right;white-space:nowrap;">
+        <button class="btn-secondary" style="font-size:11px;padding:3px 10px;margin-right:4px;" onclick="editEquipment(${i})">Edit</button>
+        <button class="danger-btn" style="font-size:11px;padding:3px 10px;" onclick="deleteEquipment(${i})">Delete</button>
+      </td>
+    </tr>`;
+  });
+
+  el.innerHTML = `<table class="history-table">
+    <thead><tr>
+      <th>Item</th><th>Category</th><th>Qty</th><th>Unit</th><th>Condition</th><th>Serial #</th><th style="text-align:right;">Actions</th>
+    </tr></thead>
+    <tbody>${rows}</tbody>
+  </table>
+  <div style="font-size:12px;color:var(--text-muted);margin-top:12px;">${equipData.length} item${equipData.length !== 1 ? 's' : ''}</div>`;
 }
 
 function openEquipModal(item) {
-  document.getElementById('equipEditId').value   = item?.id || '';
-  document.getElementById('equipName').value     = item?.name || '';
-  document.getElementById('equipCat').value      = item?.category || 'Hand Tools';
-  document.getElementById('equipQty').value      = item?.quantity ?? 1;
-  document.getElementById('equipUnit').value     = item?.unit_assigned || '';
-  document.getElementById('equipCond').value     = item?.condition || 'Good';
-  document.getElementById('equipSerial').value   = item?.serial_number || '';
-  document.getElementById('equipNotes').value    = item?.notes || '';
+  document.getElementById('equipEditId').value   = item ? item.id : '';
+  document.getElementById('equipName').value     = item ? item.name : '';
+  document.getElementById('equipCat').value      = item ? item.category : 'Hand Tools';
+  document.getElementById('equipQty').value      = item ? item.quantity : 1;
+  document.getElementById('equipUnit').value     = item ? (item.unit_assigned || '') : '';
+  document.getElementById('equipCond').value     = item ? item.condition : 'Good';
+  document.getElementById('equipSerial').value   = item ? (item.serial_number || '') : '';
+  document.getElementById('equipNotes').value    = item ? (item.notes || '') : '';
   document.getElementById('equipModalTitle').textContent = item ? 'Edit Equipment' : 'Add Equipment';
   document.getElementById('equipModalError').style.display = 'none';
   document.getElementById('equipModal').classList.add('visible');
 }
 
-function closeEquipModal() { document.getElementById('equipModal').classList.remove('visible'); }
-
-function editEquipment(id) {
-  const item = equipData.find(e => e.id === id);
-  if(item) openEquipModal(item);
+function closeEquipModal() {
+  document.getElementById('equipModal').classList.remove('visible');
 }
 
-async function deleteEquipment(id, name) {
-  if(!confirm('Delete "'+name+'"?')) return;
-  const { error } = await sb.from('equipment_inventory').delete().eq('id', id);
-  if(error){ alert('Error: '+error.message); return; }
+function editEquipment(idx) {
+  openEquipModal(equipData[idx]);
+}
+
+async function deleteEquipment(idx) {
+  const item = equipData[idx];
+  if(!item || !confirm('Delete "' + item.name + '"?')) return;
+  const { error } = await sb.from('equipment_inventory').delete().eq('id', item.id);
+  if(error){ alert('Error: ' + error.message); return; }
+  toast('Item deleted', 'success');
   renderEquipment();
 }
 
 async function saveEquipment() {
   const errEl = document.getElementById('equipModalError');
   const name  = document.getElementById('equipName').value.trim();
-  if(!name){ errEl.textContent='Item name is required.'; errEl.style.display='block'; return; }
+  if(!name){ errEl.textContent = 'Item name is required.'; errEl.style.display = 'block'; return; }
+
   const payload = {
     name,
     category:      document.getElementById('equipCat').value,
-    quantity:      parseInt(document.getElementById('equipQty').value)||1,
-    unit_assigned: document.getElementById('equipUnit').value||null,
+    quantity:      parseInt(document.getElementById('equipQty').value) || 1,
+    unit_assigned: document.getElementById('equipUnit').value || null,
     condition:     document.getElementById('equipCond').value,
-    serial_number: document.getElementById('equipSerial').value.trim()||null,
-    notes:         document.getElementById('equipNotes').value.trim()||null,
+    serial_number: document.getElementById('equipSerial').value.trim() || null,
+    notes:         document.getElementById('equipNotes').value.trim() || null,
     updated_at:    new Date().toISOString(),
   };
+
   const editId = document.getElementById('equipEditId').value;
   let error;
-  if(editId){
-    ({error} = await sb.from('equipment_inventory').update(payload).eq('id', editId));
+  if(editId) {
+    ({ error } = await sb.from('equipment_inventory').update(payload).eq('id', editId));
   } else {
-    ({error} = await sb.from('equipment_inventory').insert([payload]));
+    ({ error } = await sb.from('equipment_inventory').insert([payload]));
   }
-  if(error){ errEl.textContent='Error: '+error.message; errEl.style.display='block'; return; }
+
+  if(error){ errEl.textContent = 'Error: ' + error.message; errEl.style.display = 'block'; return; }
   closeEquipModal();
+  toast('Item saved', 'success');
   renderEquipment();
 }
 
