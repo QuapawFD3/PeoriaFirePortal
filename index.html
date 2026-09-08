@@ -585,6 +585,8 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-
         <div class="module-desc">Member leaderboards &amp; monthly trends</div>
       </div>
     </div>
+
+    <div id="gatedHomeModules" style="display:none;">
     <div class="portal-section-label">Operational Tools <span class="gate-lock">🔓</span></div>
     <div class="module-grid">
       <div class="module-card" style="--module-color:#dc2626" onclick="openModule('truck-check')">
@@ -623,6 +625,8 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-
     </div>
   </div>
 </div>
+    </div>
+
 
 <!-- ══ LOGIN ═══════════════════════════════════════ -->
 <div class="view" id="view-login">
@@ -1084,12 +1088,15 @@ const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 function setAuthState(isLoggedIn, email) {
   const userBar   = document.getElementById('authUserBar');
   const userEmail = document.getElementById('authUserEmail');
+  const gated     = document.getElementById('gatedHomeModules');
   if(isLoggedIn) {
     userBar.classList.add('visible');
     userEmail.textContent = email;
+    if(gated) gated.style.display = '';
   } else {
     userBar.classList.remove('visible');
     userEmail.textContent = '';
+    if(gated) gated.style.display = 'none';
   }
 }
 async function authSignIn() {
